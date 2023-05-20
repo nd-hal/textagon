@@ -3,6 +3,8 @@
 # Textagon
 
 Textagon is a powerful tool for text data analysis, providing a means to visualize parallel representations of your data and gain insight into the impact of various lexicons on two classes of text data.
+- **Parallel Representations**
+- **Graph-based Feature Weighting**
 
 # Installation
 
@@ -31,10 +33,20 @@ python setup.py sdist bdist_wheel
 twine upload dist/*
 ```
 
-# Core Functions
+# Parallel Representations
 
 - **ReadAllLexicons**: Processes the lexicon file.
 - **SanityCheck**: Ensures the data is valid and well-organized.
 - **ReadRawText**: Invokes the SanityCheck function to return pure text data and class labels.
 - **setSpellChecking**: Sets up the spellchecker. Note: If you wish to use a custom exclusion file, you must specify your exclusion file in the downstream function call.
 - **TextToFeatures**: [Add description here]
+- **TextToFeaturesReader**: [Add description here]
+- **RunFeatureConstruction**: [Add description here]
+- **ConstructLegomena**: [Add description here]
+- **BuildFeatureVector**: [Add description here]
+- **VectorProcessor**: [Add description here]
+- **ResultWriter**: [Add description here]
+- **runVader**: [Add description here]
+- **GenerateColumnKey**: [Add description here]
+
+# Graph-based Feature Weighting (AFRN)
