@@ -10,7 +10,7 @@ Textagon is a powerful tool for text data analysis, providing a means to visuali
 
 ### Initial Setup
 ```
-**pip install textagon** # Install the package using pip
+pip install textagon # Install the package using pip
 textagon_post_install # Run the post-installation script
 ```
 
