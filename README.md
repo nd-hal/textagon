@@ -2,7 +2,7 @@
 
 # Textagon
 
-Textagon is a powerful tool for text data analysis, providing a means to visualize parallel representations of your data and gain insight into the impact of various lexicons on two classes of text data.
+Textagon is a powerful tool for text data analysis, providing a means to visualize parallel representations of your data and gain insight into the impact of various lexicons on two classes of text data. 
 - **Parallel Representations**
 - **Graph-based Feature Weighting**
 
@@ -50,3 +50,28 @@ twine upload dist/*
 - **GenerateColumnKey**: [Add description here]
 
 # Graph-based Feature Weighting (AFRN)
+- **HashLetters**: [Add description here]
+- **ReadFeatures**: [Add description here]
+- **ReadTrain**: [Add description here]
+- **AssignTrainWeights**: [Add description here]
+- **ReadSentiScores**: [Add description here]
+- **ReadLex**: [Add description here]
+- **NGramSemantic**: [Add description here]
+- **AssignSemanticWeights**: [Add description here]
+- **POSSemantic**: [Add description here]
+- **POSWordSemantic**: [Add description here]
+- **LEXSemantic**: [Add description here]
+- **MatchCharSubstrings**: [Add description here]
+- **MatchSubstrings**: [Add description here]
+- **SubsumeCatN**: [Add description here]
+- **SubsumeFeatures**: [Add description here]
+- **RunSubsumptions**: [Add description here]
+- **LoadHash**: [Add description here]
+- **RunCCSubsumptions**: [Add description here]
+- **RunParallels**: [Add description here]
+- **ParallelCatN**: [Add description here]
+- **ParaLex**: [Add description here]
+- **Correlation**: [Add description here]
+- **ParaPOS**: [Add description here]
+- **OutputRankings**: [Add description here]
+- **AFRN**: [Add description here]
