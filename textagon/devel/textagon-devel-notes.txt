@@ -1,0 +1,24 @@
+- if there is no spellchecker replacement suggestion, should that be tagged as a mispelling or put back in as the original text and not flagged as mispelling (e.g., this comes up on certain names and hashtags, which makes the right behavior unclear...)
+
+- there is a problem with GLOVE that affects regex mode (which is used more aptly for LIWC; see GloveTW285	http,**,t_t,bot,*,ww,rt.,***,:],ll,-----,nrt,------,___,****,=],-------,*****,:, '@@,=, 'deem,,,_____,:-\\,nby,******,##,*******,rtt,nvia,********,************; same problem in GLOVEWG_25K&GLOVEWG414)
+    - note: I fixed this for a single '*' and tags that consist exclusively of '*' characters
+
+- fixed a problem with WNAffect
+
+- switched disambiguate in pywsd to use the original text case instead of lower case (minor changes to output across associated features word sense, hypernym, and sentiment)
+
+- does the order of lexicon names/tags matter? some are alphabetical (e.g., SYN, GLOVE_24K) but others aren't (e.g., LIWC, GLOVE_33K) -- we've been sorting them, but do we need to?
+    - STOP SORTING (DONE)
+    
+- update changelog and readme
+- add revised wnaffect code
+
+
+
+
+dev-16 threads:         148s (subtract 11s without misspellingdetailed)
+v13-fix-16 threads*:    162s
+dev-32 threads:         123s (subtract 2s without misspellingdetailed)
+v13-fix-32 threads*:    133s
+
+* in v13, the maxCores setting isn't working consistenly for mapply vs. multiprocessing

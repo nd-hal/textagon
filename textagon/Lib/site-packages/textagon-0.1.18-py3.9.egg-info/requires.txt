@@ -1,0 +1,9 @@
+nltk>=3.8.1
+scikit-learn>=1.2.1
+pandas>=1.5.3
+numpy>=1.24.2
+beautifulsoup4>=4.11.2
+mapply>=0.1.21
+pyenchant>=3.2.2
+tzlocal>=4.3
+spacy>=3.5.2
