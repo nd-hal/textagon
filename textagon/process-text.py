@@ -53,6 +53,7 @@ ctx._force_start_method('spawn')
 
 import warnings
 warnings.filterwarnings('ignore', message = '.*looks like a URL.*', category = UserWarning, module = 'bs4')
+warnings.filterwarnings('ignore', message = '.*The multilingual functions are not available with this Wordnet version*', category = UserWarning, module = 'nltk')
 
 #####################
 ### CONFIGURATION ###
@@ -888,7 +889,7 @@ def ConstructLegomena (corpus, debug = False):
         try:
             train_data_features = vectorizer.fit_transform(corpus)
             train_data_features = train_data_features.toarray()
-            vocab = vectorizer.get_feature_names()
+            vocab = vectorizer.get_feature_names_out()
             legomenaVocab[label] = vocab
         except:
             print('# Warning: No ' + label.lower() + ' legomena were found. #', '\n')
@@ -918,7 +919,7 @@ def BuildFeatureVector (data, vectorizer, vectorizerName, feature, debug = False
     train_data_features = vectorizer.fit_transform( data )
     #train_data_features = train_data_features.toarray()
 
-    names = vectorizer.get_feature_names()
+    names = vectorizer.get_feature_names_out()
 
     #debug = True
 
@@ -929,7 +930,7 @@ def BuildFeatureVector (data, vectorizer, vectorizerName, feature, debug = False
         #print(names, '\n')
         #print(vectorizer.vocabulary_)
 
-        vocab = vectorizer.get_feature_names()
+        vocab = vectorizer.get_feature_names_out()
         print(vocab)
 
         # Sum up the counts of each vocabulary word
