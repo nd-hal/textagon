@@ -154,6 +154,13 @@ def setSpellChecking(exclusionsFileFullPath='None'):
 		return None, None, 0, None
 
 def ReadAllLexicons(lexiconFileFullPath=None):
+	"""_summary_
+
+	:param lexiconFileFullPath: _description_, defaults to None
+	:type lexiconFileFullPath: _type_, optional
+	:return: _description_
+	:rtype: _type_
+	"""
 
 	# Get the path of the default lexicon file
 	if lexiconFileFullPath is None:
@@ -161,6 +168,13 @@ def ReadAllLexicons(lexiconFileFullPath=None):
 		lexiconFileFullPath = pkg_resources.resource_filename('textagon', 'external/lexicons/Lexicons_v5.zip')
 
 	def is_valid_zip_file(file_path):
+		"""_summary_
+
+		:param file_path: _description_
+		:type file_path: _type_
+		:return: _description_
+		:rtype: _type_
+		"""
 		# Check if file exists
 		if not os.path.exists(file_path):
 			print(f"Error: The file '{file_path}' does not exist.")
@@ -179,6 +193,13 @@ def ReadAllLexicons(lexiconFileFullPath=None):
 	customLexicons = {}
 
 	def BuildLexicon (L, customLexicons):
+		"""_summary_
+
+		:param L: _description_
+		:type L: _type_
+		:param customLexicons: _description_
+		:type customLexicons: _type_
+		"""
 
 		tagTokenPairs = list(filter(None, L.split('\n')))
 
@@ -227,6 +248,15 @@ def ReadAllLexicons(lexiconFileFullPath=None):
 	return(customLexicons)
 
 def SanityCheck(dataPath: str = None, override_original_file: bool = False) -> Tuple[int, dict, List[Tuple[str, str]]]:
+	"""_summary_
+
+	:param dataPath: _description_, defaults to None
+	:type dataPath: str, optional
+	:param override_original_file: _description_, defaults to False
+	:type override_original_file: bool, optional
+	:return: _description_
+	:rtype: Tuple[int, dict, List[Tuple[str, str]]]
+	"""
 	print("Sanity check started...")
 	def is_valid_file(file_path: str) -> bool:
 		if not os.path.exists(file_path):
@@ -277,6 +307,11 @@ def SanityCheck(dataPath: str = None, override_original_file: bool = False) -> T
 	return ret_dict
 
 def ReadRawText (path: str = None):
+	"""_summary_
+
+	:param path: _description_, defaults to None
+	:type path: str, optional
+	"""
 	print("Reading raw text...")
 	pure_chunck = SanityCheck(dataPath=path, override_original_file=False)
 	classLabels = list(pure_chunck['samples_per_class'].keys())
@@ -285,6 +320,25 @@ def ReadRawText (path: str = None):
 	return({'corpus': raw, 'classLabels': classLabels})
 
 def TextToFeatures (textData, debug = False, lexicons = None, wnaReturnLevel = 5, useSpellChecker = True, provideMisspellingDetailed = True, useCores = 1):
+	"""_summary_
+
+	:param textData: _description_
+	:type textData: _type_
+	:param debug: _description_, defaults to False
+	:type debug: bool, optional
+	:param lexicons: _description_, defaults to None
+	:type lexicons: _type_, optional
+	:param wnaReturnLevel: _description_, defaults to 5
+	:type wnaReturnLevel: int, optional
+	:param useSpellChecker: _description_, defaults to True
+	:type useSpellChecker: bool, optional
+	:param provideMisspellingDetailed: _description_, defaults to True
+	:type provideMisspellingDetailed: bool, optional
+	:param useCores: _description_, defaults to 1
+	:type useCores: int, optional
+	:return: _description_
+	:rtype: _type_
+	"""
 
 	if lexicons == None:
 		lexicons = ReadAllLexicons()
@@ -305,6 +359,13 @@ def TextToFeatures (textData, debug = False, lexicons = None, wnaReturnLevel = 5
 		})
 
 	def BasicTextCleanup (sentence, debug = False):
+		"""_summary_
+
+		:param sentence: _description_
+		:type sentence: _type_
+		:param debug: _description_, defaults to False
+		:type debug: bool, optional
+		"""
 
 		if debug:
 			print('\nInitial Sentence:', sentence)
@@ -521,6 +582,13 @@ def TextToFeatures (textData, debug = False, lexicons = None, wnaReturnLevel = 5
 	# Process Text with spaCy
 	print('\n# Processing Text Representations #\n')
 	def ProcessText (doc, debug = debug):
+		"""_summary_
+
+		:param doc: _description_
+		:type doc: _type_
+		:param debug: _description_, defaults to debug
+		:type debug: _type_, optional
+		"""
 
 		doc = nlp(doc)
 
@@ -704,6 +772,29 @@ def TextToFeatures (textData, debug = False, lexicons = None, wnaReturnLevel = 5
 	return([textData, corrections])
 
 def TextToFeaturesReader (sentenceList, debug = False, inputLimit = False, lexicons = None, maxCores = False, wnaReturnLevel = 5, useSpellChecker = False, provideMisspellingDetailed = False, outputFileName = 'output', output_path = None):
+	"""_summary_
+
+	:param sentenceList: _description_
+	:type sentenceList: _type_
+	:param debug: _description_, defaults to False
+	:type debug: bool, optional
+	:param inputLimit: _description_, defaults to False
+	:type inputLimit: bool, optional
+	:param lexicons: _description_, defaults to None
+	:type lexicons: _type_, optional
+	:param maxCores: _description_, defaults to False
+	:type maxCores: bool, optional
+	:param wnaReturnLevel: _description_, defaults to 5
+	:type wnaReturnLevel: int, optional
+	:param useSpellChecker: _description_, defaults to False
+	:type useSpellChecker: bool, optional
+	:param provideMisspellingDetailed: _description_, defaults to False
+	:type provideMisspellingDetailed: bool, optional
+	:param outputFileName: _description_, defaults to 'output'
+	:type outputFileName: str, optional
+	:param output_path: _description_, defaults to None
+	:type output_path: _type_, optional
+	"""
 
 	# if output_path is None, set it to the current working directory
 	if output_path is None:
@@ -742,6 +833,27 @@ def TextToFeaturesReader (sentenceList, debug = False, inputLimit = False, lexic
 	return({'ProcessedText': processedText, 'Corrections': corrections})
 
 def RunFeatureConstruction (fullinputpath = None, inputLimit = False, outputpath = None, outputFileName = 'output', maxCores = False, lexiconFileFullPath = None, wnaReturnLevel = 5, useSpellChecker = False, provideMisspellingDetailed = False):
+	"""_summary_
+
+	:param fullinputpath: _description_, defaults to None
+	:type fullinputpath: _type_, optional
+	:param inputLimit: _description_, defaults to False
+	:type inputLimit: bool, optional
+	:param outputpath: _description_, defaults to None
+	:type outputpath: _type_, optional
+	:param outputFileName: _description_, defaults to 'output'
+	:type outputFileName: str, optional
+	:param maxCores: _description_, defaults to False
+	:type maxCores: bool, optional
+	:param lexiconFileFullPath: _description_, defaults to None
+	:type lexiconFileFullPath: _type_, optional
+	:param wnaReturnLevel: _description_, defaults to 5
+	:type wnaReturnLevel: int, optional
+	:param useSpellChecker: _description_, defaults to False
+	:type useSpellChecker: bool, optional
+	:param provideMisspellingDetailed: _description_, defaults to False
+	:type provideMisspellingDetailed: bool, optional
+	"""
 
 	lexicons = ReadAllLexicons(lexiconFileFullPath)
 
@@ -761,6 +873,13 @@ def RunFeatureConstruction (fullinputpath = None, inputLimit = False, outputpath
 	print('### Stage execution finished at ' + end_time_str + ' (Time Elapsed: {})'.format(pd.to_timedelta(end_time - start_time).round('1s')) + ' ###\n')
 
 def ConstructLegomena (corpus, debug = False):
+	"""_summary_
+
+	:param corpus: _description_
+	:type corpus: _type_
+	:param debug: _description_, defaults to False
+	:type debug: bool, optional
+	"""
 
 	vectorizerLegomenaHapax = CountVectorizer(
 		ngram_range = (1, 1),
@@ -818,6 +937,19 @@ def ConstructLegomena (corpus, debug = False):
 	return(legomenaDF)
 
 def BuildFeatureVector (data, vectorizer, vectorizerName, feature, debug = False):
+	"""_summary_
+
+	:param data: _description_
+	:type data: _type_
+	:param vectorizer: _description_
+	:type vectorizer: _type_
+	:param vectorizerName: _description_
+	:type vectorizerName: _type_
+	:param feature: _description_
+	:type feature: _type_
+	:param debug: _description_, defaults to False
+	:type debug: bool, optional
+	"""
 
 	# Using standard scikit vectorizers. For custom analyzer, see http://stackoverflow.com/questions/26907309/create-ngrams-only-for-words-on-the-same-line-disregarding-line-breaks-with-sc
 
@@ -858,6 +990,43 @@ def BuildFeatureVector (data, vectorizer, vectorizerName, feature, debug = False
 	return(df)
 
 def VectorProcessor (data, maxNgram = 3, vader = False, maxFeatures = None, buildVectors = 'b', removeZeroVariance = True, combineFeatures = False, minDF = 5, removeDupColumns = False, classLabels = False, runLegomena = True, additionalCols = False, writeRepresentations = False, justRepresentations = False, outputpath = None, debug = False, outputFileName = 'output'):
+	"""_summary_
+
+	:param data: _description_
+	:type data: _type_
+	:param maxNgram: _description_, defaults to 3
+	:type maxNgram: int, optional
+	:param vader: _description_, defaults to False
+	:type vader: bool, optional
+	:param maxFeatures: _description_, defaults to None
+	:type maxFeatures: _type_, optional
+	:param buildVectors: _description_, defaults to 'b'
+	:type buildVectors: str, optional
+	:param removeZeroVariance: _description_, defaults to True
+	:type removeZeroVariance: bool, optional
+	:param combineFeatures: _description_, defaults to False
+	:type combineFeatures: bool, optional
+	:param minDF: _description_, defaults to 5
+	:type minDF: int, optional
+	:param removeDupColumns: _description_, defaults to False
+	:type removeDupColumns: bool, optional
+	:param classLabels: _description_, defaults to False
+	:type classLabels: bool, optional
+	:param runLegomena: _description_, defaults to True
+	:type runLegomena: bool, optional
+	:param additionalCols: _description_, defaults to False
+	:type additionalCols: bool, optional
+	:param writeRepresentations: _description_, defaults to False
+	:type writeRepresentations: bool, optional
+	:param justRepresentations: _description_, defaults to False
+	:type justRepresentations: bool, optional
+	:param outputpath: _description_, defaults to None
+	:type outputpath: _type_, optional
+	:param debug: _description_, defaults to False
+	:type debug: bool, optional
+	:param outputFileName: _description_, defaults to 'output'
+	:type outputFileName: str, optional
+	"""
 
 	if outputpath is None or not os.path.isdir(outputpath):
 		print("Output path not provided or invalid. Using current directory instead.")
@@ -1162,6 +1331,22 @@ def VectorProcessor (data, maxNgram = 3, vader = False, maxFeatures = None, buil
 		return(df)
 
 def ResultWriter (df, outputpath = None, outputFileName = 'output', index = False, header = False, compression = None):
+	"""_summary_
+
+	:param df: _description_
+	:type df: _type_
+	:param outputpath: _description_, defaults to None
+	:type outputpath: _type_, optional
+	:param outputFileName: _description_, defaults to 'output'
+	:type outputFileName: str, optional
+	:param index: _description_, defaults to False
+	:type index: bool, optional
+	:param header: _description_, defaults to False
+	:type header: bool, optional
+	:param compression: _description_, defaults to None
+	:type compression: _type_, optional
+	"""
+
 	if outputpath is None or not os.path.isdir(outputpath):
 		print("Output path not provided or invalid. Using current directory instead.")
 		outputpath = os.getcwd()
@@ -1182,6 +1367,13 @@ def ResultWriter (df, outputpath = None, outputFileName = 'output', index = Fals
 	print('- Time Elapsed: {}\n'.format(pd.to_timedelta(datetime.now(get_localzone()) - start).round('1s')))
 
 def runVader (sentenceList, inputLimit):
+	"""_summary_
+
+	:param sentenceList: _description_
+	:type sentenceList: _type_
+	:param inputLimit: _description_
+	:type inputLimit: _type_
+	"""
 
 	if (inputLimit == 0):
 		inputLimit = len(sentenceList)
@@ -1212,6 +1404,15 @@ def runVader (sentenceList, inputLimit):
 	return(vaderDF)
 
 def GenerateColumnKey(df, outputpath = None, outputFileName = 'output'):
+	"""_summary_
+
+	:param df: _description_
+	:type df: _type_
+	:param outputpath: _description_, defaults to None
+	:type outputpath: _type_, optional
+	:param outputFileName: _description_, defaults to 'output'
+	:type outputFileName: str, optional
+	"""
 
 	# |~| separates vectorizer, category, and feature (in that order); always 2 in label (e.g., BINARY|~|WORD|~|hello)
 	# |-| replaces spaces within features from higher order n-grams, e.g., "the|-|cat|-|jumped" (3-gram); this also applies to character n-grams that include spaces, e.g., g|-|a == 'g a'
@@ -1274,6 +1475,53 @@ def GenerateColumnKey(df, outputpath = None, outputFileName = 'output'):
 	print('- Time Elapsed: {}\n'.format(pd.to_timedelta(datetime.now(get_localzone()) - start).round('1s')))
 
 def RunPostFeatureConstruction (lexiconpath, fullinputpath, inputLimit, outputpath = None, outputFileName = 'output', maxCores = False, maxNgram = 3, lexiconFileFullPath = False, vader = False, wnaReturnLevel = 5, maxFeatures = 50, buildVectors = 'b', index = False, removeZeroVariance = True, combineFeatures = False, minDF = 5, removeDupColumns = False, useSpellChecker = False, provideMisspellingDetailed = False, additionalCols = False, writeRepresentations = False, justRepresentations = False):
+	"""_summary_
+
+	:param lexiconpath: _description_
+	:type lexiconpath: _type_
+	:param fullinputpath: _description_
+	:type fullinputpath: _type_
+	:param inputLimit: _description_
+	:type inputLimit: _type_
+	:param outputpath: _description_, defaults to None
+	:type outputpath: _type_, optional
+	:param outputFileName: _description_, defaults to 'output'
+	:type outputFileName: str, optional
+	:param maxCores: _description_, defaults to False
+	:type maxCores: bool, optional
+	:param maxNgram: _description_, defaults to 3
+	:type maxNgram: int, optional
+	:param lexiconFileFullPath: _description_, defaults to False
+	:type lexiconFileFullPath: bool, optional
+	:param vader: _description_, defaults to False
+	:type vader: bool, optional
+	:param wnaReturnLevel: _description_, defaults to 5
+	:type wnaReturnLevel: int, optional
+	:param maxFeatures: _description_, defaults to 50
+	:type maxFeatures: int, optional
+	:param buildVectors: _description_, defaults to 'b'
+	:type buildVectors: str, optional
+	:param index: _description_, defaults to False
+	:type index: bool, optional
+	:param removeZeroVariance: _description_, defaults to True
+	:type removeZeroVariance: bool, optional
+	:param combineFeatures: _description_, defaults to False
+	:type combineFeatures: bool, optional
+	:param minDF: _description_, defaults to 5
+	:type minDF: int, optional
+	:param removeDupColumns: _description_, defaults to False
+	:type removeDupColumns: bool, optional
+	:param useSpellChecker: _description_, defaults to False
+	:type useSpellChecker: bool, optional
+	:param provideMisspellingDetailed: _description_, defaults to False
+	:type provideMisspellingDetailed: bool, optional
+	:param additionalCols: _description_, defaults to False
+	:type additionalCols: bool, optional
+	:param writeRepresentations: _description_, defaults to False
+	:type writeRepresentations: bool, optional
+	:param justRepresentations: _description_, defaults to False
+	:type justRepresentations: bool, optional
+	"""
 
 	#print(maxCores)
 	if outputpath is None or not os.path.isdir(outputpath):
@@ -1407,6 +1655,14 @@ lexTags = np.zeros((50000), dtype=object)
 
 
 def HashLetters(strToken):
+	"""_summary_
+
+	:param strToken: _description_
+	:type strToken: _type_
+	:return: _description_
+	:rtype: _type_
+	"""
+
 	vals = np.zeros((2),dtype=int)
 	vals = [-1,-1]
 
@@ -1425,6 +1681,12 @@ def HashLetters(strToken):
 	return vals
 
 def ReadFeatures(featuresFile):
+	"""_summary_
+
+	:param featuresFile: _description_
+	:type featuresFile: _type_
+	"""
+
 	global numFeat, foundNACt, foundNA, numLexFile, numCat, maxposword, flipposword, flipposwordCt, lexFile, cat, featureIndex, featureStr, featureCatStr
 	if featuresFile is None or not os.path.isfile(featuresFile):
 		print("Features file not provided or invalid. Terminating...", '\n')
@@ -1592,6 +1854,14 @@ def ReadFeatures(featuresFile):
 	featuresData.close()
 
 def ReadTrain(trainFile = None):
+	"""_summary_
+
+	:param trainFile: _description_, defaults to None
+	:type trainFile: _type_, optional
+	:return: _description_
+	:rtype: _type_
+	"""
+
 	# global matrix, numFeat, foundNACt, foundNA, numLexFile, numCat, maxposword, flipposwordCt, lexFile, cat, numInst, classLabels, numClass,trainWeight, trainWeightC, instLabels
 	global matrix, numFeat, foundNACt, foundNA, numLexFile, numCat, maxposword, flipposwordCt, lexFile, cat, numInst, classLabels, numClass,trainWeight, trainWeightC, instLabels
 	if trainFile is None or not os.path.isfile(trainFile):
@@ -1669,6 +1939,12 @@ def ReadTrain(trainFile = None):
 	trainData.close()
 
 def AssignTrainWeights(trainFile = None):
+	"""_summary_
+
+	:param trainFile: _description_, defaults to None
+	:type trainFile: _type_, optional
+	"""
+
 	global numFeat, foundNACt, foundNA, numLexFile, numCat, maxposword, flipposwordCt, lexFile, cat, numInst, classLabels, numClass,trainWeight, trainWeightC, instLabels
 	global matrix
 	print("Assigning training weights")
@@ -1728,6 +2004,9 @@ def AssignTrainWeights(trainFile = None):
 		trainWeightC[b][1] = int(maxCC)
 
 def ReadSentiScores():
+	"""_summary_
+	"""
+
 	global sentiscoresCt, sentiscores
 	#we know the max hash value from prior testing...
 	sentiMax = 4763
@@ -1754,6 +2033,9 @@ def ReadSentiScores():
 	#	print(str(sentiscores[2][14][z][0]),str(sentiscores[2][14][z][1]),str(sentiscores[2][14][z][2]))
 
 def ReadLex():
+	"""_summary_
+	"""
+
 	global numLexFile, lexSentiScores, numLex, lexTags, hashlex, hashlexCt, hashlexClust, lexCt, lex
 	print("Loading lexicons...")
 	#tag index number and quantity
@@ -1795,6 +2077,14 @@ def ReadLex():
 		if lexCt[x] >0: lexSentiScores[x]= float(lexSentiScores[x])/float(lexCt[x])
 
 def NGramSemantic(word):
+	"""_summary_
+
+	:param word: _description_
+	:type word: _type_
+	:return: _description_
+	:rtype: _type_
+	"""
+
 	#global sentiscoresCt
 	tokens = re.split("_|-| |\\|_\\|",word)
 	tscores = np.zeros(len(tokens), dtype='float')
@@ -1826,6 +2116,9 @@ def NGramSemantic(word):
 	return score
 
 def AssignSemanticWeights():
+	"""_summary_
+	"""
+
 	global featureIndex, featureStr, trainWeight
 	print("Adding semantic weights")
 	# assigns semantic weights and appends these to train weights 
@@ -1849,6 +2142,14 @@ def AssignSemanticWeights():
 			if trainWeight[x]>3: print(x,featureStr[x],trainWeight[x],valueSemantic)
 
 def POSSemantic(word):
+	"""_summary_
+
+	:param word: _description_
+	:type word: _type_
+	:return: _description_
+	:rtype: _type_
+	"""
+
 	#global flipposwordCt, sentiscoresCt
 
 	#tokens = word.split(" |\\|_\\|")
@@ -1906,6 +2207,14 @@ def POSSemantic(word):
 	return score
 
 def POSWordSemantic(word):
+	"""_summary_
+
+	:param word: _description_
+	:type word: _type_
+	:return: _description_
+	:rtype: _type_
+	"""
+
 	#global flipposwordCt, sentiscoresCt
 
 	#tokens = word.split(" |\\|_\\|")
@@ -1949,6 +2258,14 @@ def POSWordSemantic(word):
 	return score
 
 def LEXSemantic(word):
+	"""_summary_
+
+	:param word: _description_
+	:type word: _type_
+	:return: _description_
+	:rtype: _type_
+	"""
+
 	#global flipposwordCt, sentiscoresCt, numLex, lexSentiScores
 
 	#tokens = word.split(" |\\|_\\|")
@@ -1970,6 +2287,18 @@ def LEXSemantic(word):
 	return score
 
 def MatchCharSubstrings(worda, c1, c2):
+	"""_summary_
+
+	:param worda: _description_
+	:type worda: _type_
+	:param c1: _description_
+	:type c1: _type_
+	:param c2: _description_
+	:type c2: _type_
+	:return: _description_
+	:rtype: _type_
+	"""
+
 	#global numFeat, ftCt, ft, ftIndex
 	#global thresh, subThresh
 	matchIndices = np.zeros(100000, dtype="int32")
@@ -1988,6 +2317,18 @@ def MatchCharSubstrings(worda, c1, c2):
 	return matchIndices, numMatch
 
 def MatchSubstrings(worda, c1, c2):
+	"""_summary_
+
+	:param worda: _description_
+	:type worda: _type_
+	:param c1: _description_
+	:type c1: _type_
+	:param c2: _description_
+	:type c2: _type_
+	:return: _description_
+	:rtype: _type_
+	"""
+
 	#global numFeat, ftCt, ft, ftIndex, featureStr, thresh, subThresh
 	matchIndices = np.zeros(100000, dtype="int32")
 	numMatch = 0
@@ -2049,6 +2390,18 @@ def MatchSubstrings(worda, c1, c2):
 	return matchIndices, numMatch
 
 def SubsumeCatN(catVal,compVal,n1,n2):
+	"""_summary_
+
+	:param catVal: _description_
+	:type catVal: _type_
+	:param compVal: _description_
+	:type compVal: _type_
+	:param n1: _description_
+	:type n1: _type_
+	:param n2: _description_
+	:type n2: _type_
+	"""
+
 	#global numFeat, thresh, trainWeight, featureStr, featureIndex
 	#global thresh, subThresh
 	global featureIndex, outLogSub
@@ -2076,6 +2429,16 @@ def SubsumeCatN(catVal,compVal,n1,n2):
 			SubsumeFeatures(f,matches, matchNum)
 
 def SubsumeFeatures(indexa, indexb, numM):
+	"""_summary_
+
+	:param indexa: _description_
+	:type indexa: _type_
+	:param indexb: _description_
+	:type indexb: _type_
+	:param numM: _description_
+	:type numM: _type_
+	"""
+
 	#global thresh, trainWeight, subThresh, trainWeightC, featureIndex, runLogs, outLogSub
 	#global thresh, subThresh
 	global trainWeight, featureIndex, outLogSub
@@ -2093,6 +2456,9 @@ def SubsumeFeatures(indexa, indexb, numM):
 				outLogSub.write(str(indexa)+","+str(featureStr[indexa]) + "," + str(trainWeight[indexa]) + "  \t" + str(indexb[b])+","+str(featureStr[indexb[b]])  + "," + str(trainWeight[indexb[b]]) +"\n")
 
 def RunSubsumptions():
+	"""_summary_
+	"""
+
 	#global numCat, cat, catN
 	#global thresh, subThresh
 	# this method runs within-category subsumptions
@@ -2110,6 +2476,16 @@ def RunSubsumptions():
 				SubsumeCatN(c,c,n,m); #e.g., 4-3, 3-2, 2-1 when m=n-1, but also covers 4-2, 4-1, etc.
 
 def LoadHash(c, n, fStatus):
+	"""_summary_
+
+	:param c: _description_
+	:type c: _type_
+	:param n: _description_
+	:type n: _type_
+	:param fStatus: _description_
+	:type fStatus: _type_
+	"""
+
 	#global maxhash, featureIndex, numFeat, featureStr, ft, ftIndex, ftPosition, ftCt
 	#global thresh, subThresh
 	global ft, ftIndex, ftPosition, ftCt
@@ -2132,6 +2508,9 @@ def LoadHash(c, n, fStatus):
 						ftCt[index[0]][index[1]] = ftCt[index[0]][index[1]] + 1
 
 def RunCCSubsumptions():
+	"""_summary_
+	"""
+
 	#global numCat, cat, catN
 	print("Running cross-category subsumption relations")
 	matches = []
@@ -2162,6 +2541,9 @@ def RunCCSubsumptions():
 				SubsumeCatN(c,wordC,n,1); # e.g., charbi-word, chartri-word
 
 def RunParallels():
+	"""_summary_
+	"""
+
 	#global numCat, catN, cat
 	print("Running parallel relations")
 	lexC = 0
@@ -2207,6 +2589,18 @@ def RunParallels():
 				ParallelCatN(c,misC,n,n);  #WORD and MISSPELLING
 
 def ParallelCatN(catVal, compVal, n1, n2):
+	"""_summary_
+
+	:param catVal: _description_
+	:type catVal: _type_
+	:param compVal: _description_
+	:type compVal: _type_
+	:param n1: _description_
+	:type n1: _type_
+	:param n2: _description_
+	:type n2: _type_
+	"""
+
 	#global numCat, cat, trainWeight, featureIndex, thresh, numFeat
 	ct = datetime.datetime.now() 
 	print("Parallelizing", cat[catVal], cat[compVal], n1, " versus ", n2, ct)
@@ -2242,6 +2636,18 @@ def ParallelCatN(catVal, compVal, n1, n2):
 					Correlation(f,matches,catVal,compVal)
 
 def ParaLex(worda, f, c1, c2):
+	"""_summary_
+
+	:param worda: _description_
+	:type worda: _type_
+	:param f: _description_
+	:type f: _type_
+	:param c1: _description_
+	:type c1: _type_
+	:param c2: _description_
+	:type c2: _type_
+	"""
+
 	#global hashlexCt, lexTags, hashlexClust, hashlex
 	matchIndices = np.zeros(100000, dtype="int32")
 	# parallel relations: compare word tokens against lexicons
@@ -2297,6 +2703,18 @@ def ParaLex(worda, f, c1, c2):
 				Correlation(f,matchIndices,c1,c2) #if not empty, send to correlation analyzer
 
 def Correlation( indexa, comp, cat1, cat2):
+	"""_summary_
+
+	:param indexa: _description_
+	:type indexa: _type_
+	:param comp: _description_
+	:type comp: _type_
+	:param cat1: _description_
+	:type cat1: _type_
+	:param cat2: _description_
+	:type cat2: _type_
+	"""
+
 	#global numInst, matrix, thresh, corrThresh, trainWeight, featureIndex, outLogPar
 	global trainWeight, featureIndex, outLogPar
 	vect1 = np.zeros(numInst, dtype="int32")
@@ -2354,6 +2772,20 @@ def Correlation( indexa, comp, cat1, cat2):
 						outLogPar.write(str(cat[cat1])+","+str(featureStr[indexa]) + "," + str(trainWeight[indexa]) + "  \t" + str(cat[cat2])+","+str(featureStr[comp[z]]) + "," + str(trainWeight[comp[z]]) +"\t"+str(corrcoff)+"\n")
 
 def ParaPOS(worda, f, c1, c2, n):
+	"""_summary_
+
+	:param worda: _description_
+	:type worda: _type_
+	:param f: _description_
+	:type f: _type_
+	:param c1: _description_
+	:type c1: _type_
+	:param c2: _description_
+	:type c2: _type_
+	:param n: _description_
+	:type n: _type_
+	"""
+
 	#global numCat, cat, featureIndex
 	wordPOSWordIndices = np.zeros(100000, dtype="int32")
 	matchIndices = np.zeros(100000, dtype="int32")
@@ -2391,12 +2823,21 @@ def ParaPOS(worda, f, c1, c2, n):
 		Correlation(f,matchIndices,c1,c2)
 
 def OutputRankings(weightFile):
+	"""_summary_
+
+	:param weightFile: _description_
+	:type weightFile: _type_
+	"""
+
 	#global numFeat, featureCatStr, featureStr, trainWeight
 	outFile = open(weightFile, "w")
 	for b in range(0, numFeat):
 		outFile.write(str(b+1)+"\t"+str(featureStr[b])+"\t"+str(featureCatStr[b]).strip("\n")+"\t"+str(trainWeight[b])+"\n")
 
 def AFRN():
+	"""_summary_
+	"""
+	
 	ReadFeatures()
 	ReadTrain()
 	ReadSentiScores()

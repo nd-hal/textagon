@@ -193,6 +193,11 @@ nlp = spacy.load('en_core_web_sm', exclude = ['lemmatizer'])
 nlp.max_length = 10 ** 10
 
 def spaCyTOK (sentence):
+    """_summary_
+
+    :param sentence: _description_
+    :type sentence: _type_
+    """
 
     doc = nlp.tokenizer(sentence)
     tokens = []
@@ -201,14 +206,27 @@ def spaCyTOK (sentence):
     return(tokens)
 
 def splitWS (sentence):
+    """_summary_
+
+    :param sentence: _description_
+    :type sentence: _type_
+    """
     return(sentence.split(' '))
 
 def vector_hasher(x):
+    """_summary_
+
+    :param x: _description_
+    :type x: _type_
+    :return: _description_
+    :rtype: _type_
+    """
     return hash(tuple(x))
 
 pkg_resources.require('wn==0.0.23') # for pywsd
 
 class SuppressStdErr:
+    
     def __enter__ (self):
         self._original_stderr = sys.stderr
         sys.stderr = open(os.devnull, 'w')
@@ -239,10 +257,24 @@ if __name__ == '__main__':
 
 ### Read Custom Lexicons Function: ###
 def ReadAllLexicons (lexiconpath, lexiconFileFullPath = False):
+    """_summary_
+
+    :param lexiconpath: _description_
+    :type lexiconpath: _type_
+    :param lexiconFileFullPath: _description_, defaults to False
+    :type lexiconFileFullPath: bool, optional
+    """
 
     customLexicons = {}
 
     def BuildLexicon (L, customLexicons):
+        """_summary_
+
+        :param L: _description_
+        :type L: _type_
+        :param customLexicons: _description_
+        :type customLexicons: _type_
+        """
 
         tagTokenPairs = list(filter(None, L.split('\n')))
 
@@ -305,12 +337,36 @@ def ReadAllLexicons (lexiconpath, lexiconFileFullPath = False):
 
 ### Process Sentence Function ###
 def TextToFeatures (textData, debug = False, lexicons = None, wnaReturnLevel = 5, useSpellChecker = True, provideMisspellingDetailed = True, useCores = 1):
+    """_summary_
+
+    :param textData: _description_
+    :type textData: _type_
+    :param debug: _description_, defaults to False
+    :type debug: bool, optional
+    :param lexicons: _description_, defaults to None
+    :type lexicons: _type_, optional
+    :param wnaReturnLevel: _description_, defaults to 5
+    :type wnaReturnLevel: int, optional
+    :param useSpellChecker: _description_, defaults to True
+    :type useSpellChecker: bool, optional
+    :param provideMisspellingDetailed: _description_, defaults to True
+    :type provideMisspellingDetailed: bool, optional
+    :param useCores: _description_, defaults to 1
+    :type useCores: int, optional
+    """
 
     textData = pd.DataFrame({
         'InitialSentence': textData
         })
 
     def BasicTextCleanup (sentence, debug = False):
+        """_summary_
+
+        :param sentence: _description_
+        :type sentence: _type_
+        :param debug: _description_, defaults to False
+        :type debug: bool, optional
+        """
 
         if debug:
             print('\nInitial Sentence:', sentence)
@@ -711,6 +767,11 @@ def TextToFeatures (textData, debug = False, lexicons = None, wnaReturnLevel = 5
 
 ### Create Feature Combinations Function ###
 def FeatureCombiner (data):
+    """_summary_
+
+    :param data: _description_
+    :type data: _type_
+    """
 
     nonParallelReps = [] #['Misspelling', 'MisspellingDetailed'] # include all non parallelizable reps here (will exclude from combos)
 
@@ -797,6 +858,25 @@ def FeatureCombiner (data):
 
 ### Process Corpus Function ###
 def TextToFeaturesReader (sentenceList, debug = False, inputLimit = False, lexicons = None, maxCores = False, wnaReturnLevel = 5, useSpellChecker = False, provideMisspellingDetailed = False):
+    """_summary_
+
+    :param sentenceList: _description_
+    :type sentenceList: _type_
+    :param debug: _description_, defaults to False
+    :type debug: bool, optional
+    :param inputLimit: _description_, defaults to False
+    :type inputLimit: bool, optional
+    :param lexicons: _description_, defaults to None
+    :type lexicons: _type_, optional
+    :param maxCores: _description_, defaults to False
+    :type maxCores: bool, optional
+    :param wnaReturnLevel: _description_, defaults to 5
+    :type wnaReturnLevel: int, optional
+    :param useSpellChecker: _description_, defaults to False
+    :type useSpellChecker: bool, optional
+    :param provideMisspellingDetailed: _description_, defaults to False
+    :type provideMisspellingDetailed: bool, optional
+    """
 
     if (inputLimit == 0):
         inputLimit = len(sentenceList)
@@ -825,6 +905,13 @@ def TextToFeaturesReader (sentenceList, debug = False, inputLimit = False, lexic
 
 ### Read Input File Function ###
 def ReadRawText (path, classLabels = True):
+    """_summary_
+
+    :param path: _description_
+    :type path: _type_
+    :param classLabels: _description_, defaults to True
+    :type classLabels: bool, optional
+    """
 
     path = nltk.data.find(path)
     raw = open(path, 'rb').read().decode("utf-8", "ignore").split('\n') #.splitlines() #.decode("utf-8", "replace")
@@ -855,6 +942,13 @@ def ReadRawText (path, classLabels = True):
 
 ### Construct Legomena Representations ###
 def ConstructLegomena (corpus, debug = False):
+    """_summary_
+
+    :param corpus: _description_
+    :type corpus: _type_
+    :param debug: _description_, defaults to False
+    :type debug: bool, optional
+    """
 
     vectorizerLegomenaHapax = CountVectorizer(
         ngram_range = (1, 1),
@@ -913,6 +1007,19 @@ def ConstructLegomena (corpus, debug = False):
 
 ### Vectorizer Helper Function ###
 def BuildFeatureVector (data, vectorizer, vectorizerName, feature, debug = False):
+    """_summary_
+
+    :param data: _description_
+    :type data: _type_
+    :param vectorizer: _description_
+    :type vectorizer: _type_
+    :param vectorizerName: _description_
+    :type vectorizerName: _type_
+    :param feature: _description_
+    :type feature: _type_
+    :param debug: _description_, defaults to False
+    :type debug: bool, optional
+    """
 
     # Using standard scikit vectorizers. For custom analyzer, see http://stackoverflow.com/questions/26907309/create-ngrams-only-for-words-on-the-same-line-disregarding-line-breaks-with-sc
 
@@ -954,6 +1061,37 @@ def BuildFeatureVector (data, vectorizer, vectorizerName, feature, debug = False
 
 ### Convert Representations into Feature Vectors ###
 def VectorProcessor (data, maxNgram = 3, vader = False, maxFeatures = None, buildVectors = 'b', removeZeroVariance = True, combineFeatures = False, minDF = 5, removeDupColumns = False, classLabels = False, runLegomena = True, additionalCols = False, writeRepresentations = False, justRepresentations = False):
+    """_summary_
+
+    :param data: _description_
+    :type data: _type_
+    :param maxNgram: _description_, defaults to 3
+    :type maxNgram: int, optional
+    :param vader: _description_, defaults to False
+    :type vader: bool, optional
+    :param maxFeatures: _description_, defaults to None
+    :type maxFeatures: _type_, optional
+    :param buildVectors: _description_, defaults to 'b'
+    :type buildVectors: str, optional
+    :param removeZeroVariance: _description_, defaults to True
+    :type removeZeroVariance: bool, optional
+    :param combineFeatures: _description_, defaults to False
+    :type combineFeatures: bool, optional
+    :param minDF: _description_, defaults to 5
+    :type minDF: int, optional
+    :param removeDupColumns: _description_, defaults to False
+    :type removeDupColumns: bool, optional
+    :param classLabels: _description_, defaults to False
+    :type classLabels: bool, optional
+    :param runLegomena: _description_, defaults to True
+    :type runLegomena: bool, optional
+    :param additionalCols: _description_, defaults to False
+    :type additionalCols: bool, optional
+    :param writeRepresentations: _description_, defaults to False
+    :type writeRepresentations: bool, optional
+    :param justRepresentations: _description_, defaults to False
+    :type justRepresentations: bool, optional
+    """
 
     dataRows = len(data)
 
@@ -1251,6 +1389,21 @@ def VectorProcessor (data, maxNgram = 3, vader = False, maxFeatures = None, buil
         return(df)
 
 def ResultWriter (df, outputpath, outputFileName, index = False, header = False, compression = None):
+    """_summary_
+
+    :param df: _description_
+    :type df: _type_
+    :param outputpath: _description_
+    :type outputpath: _type_
+    :param outputFileName: _description_
+    :type outputFileName: _type_
+    :param index: _description_, defaults to False
+    :type index: bool, optional
+    :param header: _description_, defaults to False
+    :type header: bool, optional
+    :param compression: _description_, defaults to None
+    :type compression: _type_, optional
+    """
 
     start = datetime.now(get_localzone())
 
@@ -1265,6 +1418,13 @@ def ResultWriter (df, outputpath, outputFileName, index = False, header = False,
     print('- Time Elapsed: {}\n'.format(pd.to_timedelta(datetime.now(get_localzone()) - start).round('1s')))
 
 def runVader (sentenceList, inputLimit):
+    """_summary_
+
+    :param sentenceList: _description_
+    :type sentenceList: _type_
+    :param inputLimit: _description_
+    :type inputLimit: _type_
+    """
 
     if (inputLimit == 0):
         inputLimit = len(sentenceList)
@@ -1295,6 +1455,15 @@ def runVader (sentenceList, inputLimit):
     return(vaderDF)
 
 def GenerateColumnKey(df, outputpath, outputFileName):
+    """_summary_
+
+    :param df: _description_
+    :type df: _type_
+    :param outputpath: _description_
+    :type outputpath: _type_
+    :param outputFileName: _description_
+    :type outputFileName: _type_
+    """
 
     # |~| separates vectorizer, category, and feature (in that order); always 2 in label (e.g., BINARY|~|WORD|~|hello)
     # |-| replaces spaces within features from higher order n-grams, e.g., "the|-|cat|-|jumped" (3-gram); this also applies to character n-grams that include spaces, e.g., g|-|a == 'g a'
@@ -1350,6 +1519,29 @@ def GenerateColumnKey(df, outputpath, outputFileName):
     print('- Time Elapsed: {}\n'.format(pd.to_timedelta(datetime.now(get_localzone()) - start).round('1s')))
 
 def RunFeatureConstruction (lexiconpath, fullinputpath, inputLimit, outputpath, outputFileName, maxCores = False, lexiconFileFullPath = False, wnaReturnLevel = 5, useSpellChecker = False, provideMisspellingDetailed = False):
+    """_summary_
+
+    :param lexiconpath: _description_
+    :type lexiconpath: _type_
+    :param fullinputpath: _description_
+    :type fullinputpath: _type_
+    :param inputLimit: _description_
+    :type inputLimit: _type_
+    :param outputpath: _description_
+    :type outputpath: _type_
+    :param outputFileName: _description_
+    :type outputFileName: _type_
+    :param maxCores: _description_, defaults to False
+    :type maxCores: bool, optional
+    :param lexiconFileFullPath: _description_, defaults to False
+    :type lexiconFileFullPath: bool, optional
+    :param wnaReturnLevel: _description_, defaults to 5
+    :type wnaReturnLevel: int, optional
+    :param useSpellChecker: _description_, defaults to False
+    :type useSpellChecker: bool, optional
+    :param provideMisspellingDetailed: _description_, defaults to False
+    :type provideMisspellingDetailed: bool, optional
+    """
 
     lexicons = ReadAllLexicons(lexiconpath, lexiconFileFullPath)
 
@@ -1369,6 +1561,53 @@ def RunFeatureConstruction (lexiconpath, fullinputpath, inputLimit, outputpath, 
     print('### Stage execution finished at ' + end_time_str + ' (Time Elapsed: {})'.format(pd.to_timedelta(end_time - start_time).round('1s')) + ' ###\n')
 
 def RunPostFeatureConstruction (lexiconpath, fullinputpath, inputLimit, outputpath, outputFileName, maxCores = False, maxNgram = 3, lexiconFileFullPath = False, vader = False, wnaReturnLevel = 5, maxFeatures = 50, buildVectors = 'b', index = False, removeZeroVariance = True, combineFeatures = False, minDF = 5, removeDupColumns = False, useSpellChecker = False, provideMisspellingDetailed = False, additionalCols = False, writeRepresentations = False, justRepresentations = False):
+    """_summary_
+
+    :param lexiconpath: _description_
+    :type lexiconpath: _type_
+    :param fullinputpath: _description_
+    :type fullinputpath: _type_
+    :param inputLimit: _description_
+    :type inputLimit: _type_
+    :param outputpath: _description_
+    :type outputpath: _type_
+    :param outputFileName: _description_
+    :type outputFileName: _type_
+    :param maxCores: _description_, defaults to False
+    :type maxCores: bool, optional
+    :param maxNgram: _description_, defaults to 3
+    :type maxNgram: int, optional
+    :param lexiconFileFullPath: _description_, defaults to False
+    :type lexiconFileFullPath: bool, optional
+    :param vader: _description_, defaults to False
+    :type vader: bool, optional
+    :param wnaReturnLevel: _description_, defaults to 5
+    :type wnaReturnLevel: int, optional
+    :param maxFeatures: _description_, defaults to 50
+    :type maxFeatures: int, optional
+    :param buildVectors: _description_, defaults to 'b'
+    :type buildVectors: str, optional
+    :param index: _description_, defaults to False
+    :type index: bool, optional
+    :param removeZeroVariance: _description_, defaults to True
+    :type removeZeroVariance: bool, optional
+    :param combineFeatures: _description_, defaults to False
+    :type combineFeatures: bool, optional
+    :param minDF: _description_, defaults to 5
+    :type minDF: int, optional
+    :param removeDupColumns: _description_, defaults to False
+    :type removeDupColumns: bool, optional
+    :param useSpellChecker: _description_, defaults to False
+    :type useSpellChecker: bool, optional
+    :param provideMisspellingDetailed: _description_, defaults to False
+    :type provideMisspellingDetailed: bool, optional
+    :param additionalCols: _description_, defaults to False
+    :type additionalCols: bool, optional
+    :param writeRepresentations: _description_, defaults to False
+    :type writeRepresentations: bool, optional
+    :param justRepresentations: _description_, defaults to False
+    :type justRepresentations: bool, optional
+    """
 
     #print(maxCores)
 
@@ -1434,7 +1673,54 @@ def RunPostFeatureConstruction (lexiconpath, fullinputpath, inputLimit, outputpa
     print('Output Dimensions (Rows, Features):', df.shape, '\n\n### Execution finished at ' + end_time_str + ' (Time Elapsed: {})'.format(pd.to_timedelta(end_time - start_time).round('1s')) + ' ###\n')
 
 def RunRepresentationConstructionOnly (lexiconpath, fullinputpath, inputLimit, outputpath, outputFileName, maxCores = False, maxNgram = 3, lexiconFileFullPath = False, vader = False, wnaReturnLevel = 5, maxFeatures = 50, buildVectors = 'b', index = False, removeZeroVariance = True, combineFeatures = False, minDF = 5, removeDupColumns = False, useSpellChecker = False, provideMisspellingDetailed = False, additionalCols = False, writeRepresentations = False, justRepresentations = True):
+    """_summary_
 
+    :param lexiconpath: _description_
+    :type lexiconpath: _type_
+    :param fullinputpath: _description_
+    :type fullinputpath: _type_
+    :param inputLimit: _description_
+    :type inputLimit: _type_
+    :param outputpath: _description_
+    :type outputpath: _type_
+    :param outputFileName: _description_
+    :type outputFileName: _type_
+    :param maxCores: _description_, defaults to False
+    :type maxCores: bool, optional
+    :param maxNgram: _description_, defaults to 3
+    :type maxNgram: int, optional
+    :param lexiconFileFullPath: _description_, defaults to False
+    :type lexiconFileFullPath: bool, optional
+    :param vader: _description_, defaults to False
+    :type vader: bool, optional
+    :param wnaReturnLevel: _description_, defaults to 5
+    :type wnaReturnLevel: int, optional
+    :param maxFeatures: _description_, defaults to 50
+    :type maxFeatures: int, optional
+    :param buildVectors: _description_, defaults to 'b'
+    :type buildVectors: str, optional
+    :param index: _description_, defaults to False
+    :type index: bool, optional
+    :param removeZeroVariance: _description_, defaults to True
+    :type removeZeroVariance: bool, optional
+    :param combineFeatures: _description_, defaults to False
+    :type combineFeatures: bool, optional
+    :param minDF: _description_, defaults to 5
+    :type minDF: int, optional
+    :param removeDupColumns: _description_, defaults to False
+    :type removeDupColumns: bool, optional
+    :param useSpellChecker: _description_, defaults to False
+    :type useSpellChecker: bool, optional
+    :param provideMisspellingDetailed: _description_, defaults to False
+    :type provideMisspellingDetailed: bool, optional
+    :param additionalCols: _description_, defaults to False
+    :type additionalCols: bool, optional
+    :param writeRepresentations: _description_, defaults to False
+    :type writeRepresentations: bool, optional
+    :param justRepresentations: _description_, defaults to True
+    :type justRepresentations: bool, optional
+    """
+    
     #print('TEST', maxFeatures)
 
     print('# Now Reading Raw Data #')
