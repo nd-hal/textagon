@@ -86,6 +86,11 @@ nlp = spacy.load('en_core_web_sm', exclude = ['lemmatizer'])
 nlp.max_length = 10 ** 10
 
 def spaCyTOK (sentence):
+	"""_summary_
+
+	:param sentence: _description_
+	:type sentence: _type_
+	"""
 
 	doc = nlp.tokenizer(sentence)
 	tokens = []
@@ -94,9 +99,21 @@ def spaCyTOK (sentence):
 	return(tokens)
 
 def splitWS (sentence):
+	"""_summary_
+
+	:param sentence: _description_
+	:type sentence: _type_
+	"""
 	return(sentence.split(' '))
 
 def vector_hasher(x):
+	"""_summary_
+
+	:param x: _description_
+	:type x: _type_
+	:return: _description_
+	:rtype: _type_
+	"""
 	return hash(tuple(x))
 
 pkg_resources.require('wn==0.0.23') # for pywsd
@@ -121,6 +138,14 @@ def say_hello():
 	print("Hello, World!")
 
 def setSpellChecking(exclusionsFileFullPath='None'):
+	"""_summary_
+
+	:param exclusionsFileFullPath: _description_, defaults to 'None'
+	:type exclusionsFileFullPath: str, optional
+	:return: _description_
+	:rtype: _type_
+	"""
+	
 	b = enchant.Broker()
 	spellcheckerLibrary = 'en'
 	b.set_ordering(spellcheckerLibrary, 'aspell')
