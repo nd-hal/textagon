@@ -139,6 +139,13 @@ def say_hello():
 
 def setSpellChecking(exclusionsFileFullPath='None'):
 	"""_summary_
+	Configures and initializes a spell checker with a custom set of exclusion words.
+		- This function sets up a spell checker using the Enchant library and allows the user to specify a custom file
+		containing words to be excluded from spell checking. 
+		- If no custom file is provided or if the specified file does not exist, a default exclusions file is used instead. 
+		- The function prints details about the spell checker setup and the number of exclusion words loaded. In case of 
+		an error (such as an issue with the exclusions file), the function prints an error message and returns None values.
+
 
 	:param exclusionsFileFullPath: _description_, defaults to 'None'
 	:type exclusionsFileFullPath: str, optional
@@ -180,6 +187,14 @@ def setSpellChecking(exclusionsFileFullPath='None'):
 
 def ReadAllLexicons(lexiconFileFullPath=None):
 	"""_summary_
+	Reads and processes lexicons from a specified zip file or from a default file if none is provided.
+		- This function opens a zip file containing lexicon text files, reads each file, and builds a 
+		dictionary of custom lexicons. 
+		- If no file path is provided, it defaults to a predefined lexicon file. 
+		- The function checks the validity of the zip file and prints relevant messages if the file is 
+		missing or invalid. 
+		- It returns a dictionary with lexicons and their respective tags.
+
 
 	:param lexiconFileFullPath: _description_, defaults to None
 	:type lexiconFileFullPath: _type_, optional
@@ -194,6 +209,9 @@ def ReadAllLexicons(lexiconFileFullPath=None):
 
 	def is_valid_zip_file(file_path):
 		"""_summary_
+		Validates if the provided file path points to an existing and valid zip file.
+		- This function checks if the specified file exists and whether it is a valid zip file. 
+		- It prints error messages accordingly if the file doesn't exist or isn't a zip file.
 
 		:param file_path: _description_
 		:type file_path: _type_
@@ -219,6 +237,11 @@ def ReadAllLexicons(lexiconFileFullPath=None):
 
 	def BuildLexicon (L, customLexicons):
 		"""_summary_
+		Processes a string from a lexicon file and builds a dictionary of tags and tokens.
+			- Given the contents of a lexicon text file as a string, this function splits it into tag-token pairs.
+    		- It then builds and updates a dictionary of custom lexicons with tags as keys and lists of tokens as values.
+    		- This function is intended to be used within the `ReadAllLexicons` function.
+
 
 		:param L: _description_
 		:type L: _type_
@@ -274,6 +297,12 @@ def ReadAllLexicons(lexiconFileFullPath=None):
 
 def SanityCheck(dataPath: str = None, override_original_file: bool = False) -> Tuple[int, dict, List[Tuple[str, str]]]:
 	"""_summary_
+    Performs a sanity check on the data file specified by the dataPath.
+		- This function validates the format of the data file, ensuring each line has two parts separated by a tab,
+		representing a label and corresponding text. 
+		- It counts the occurrences of each class (label), checks the spelling of words in the text using a spell checker, 
+		and optionally overwrites the original file with the spell-checked text.
+		- It returns a dictionary containing details about the number of classes, samples per class, and the processed data.
 
 	:param dataPath: _description_, defaults to None
 	:type dataPath: str, optional
@@ -333,6 +362,13 @@ def SanityCheck(dataPath: str = None, override_original_file: bool = False) -> T
 
 def ReadRawText (path: str = None):
 	"""_summary_
+	Reads and processes raw text from a specified file path using the SanityCheck function.
+		- This function serves as a wrapper for the SanityCheck function, specifically to process and read raw text data.
+		- It takes the path to a data file, performs a sanity check on the data, and then extracts the class labels and
+		the processed text. 
+		- The function returns a dictionary containing the corpus (list of processed text samples)
+		and the class labels extracted from the data.
+
 
 	:param path: _description_, defaults to None
 	:type path: str, optional
@@ -346,6 +382,11 @@ def ReadRawText (path: str = None):
 
 def TextToFeatures (textData, debug = False, lexicons = None, wnaReturnLevel = 5, useSpellChecker = True, provideMisspellingDetailed = True, useCores = 1):
 	"""_summary_
+    Transforms text data into various linguistic features for natural language processing.
+	    - This function processes a given dataset of text, performing tasks such as spell checking, basic text cleanup,
+    	and extracting various linguistic features using spaCy and other NLP tools. 
+		- It supports custom lexicons, detailed misspelling information, and word sense disambiguation. 
+		- The function returns a tuple containing processed text data and spelling corrections.
 
 	:param textData: _description_
 	:type textData: _type_
@@ -385,7 +426,10 @@ def TextToFeatures (textData, debug = False, lexicons = None, wnaReturnLevel = 5
 
 	def BasicTextCleanup (sentence, debug = False):
 		"""_summary_
-
+		Performs basic cleanup on a given sentence, including HTML stripping, whitespace reduction, and spell checking.
+		    - This function removes HTML tags, reduces excessive whitespace, and optionally performs spell checking. 
+			- It is designed to be used as part of the text processing in the `TextToFeatures` function. Debug mode provides additional output.
+		
 		:param sentence: _description_
 		:type sentence: _type_
 		:param debug: _description_, defaults to False
@@ -608,6 +652,10 @@ def TextToFeatures (textData, debug = False, lexicons = None, wnaReturnLevel = 5
 	print('\n# Processing Text Representations #\n')
 	def ProcessText (doc, debug = debug):
 		"""_summary_
+		Processes a text document using spaCy and other NLP tools to extract various linguistic features.
+		    - This function applies spaCy processing to extract features like POS tags, NER, word senses, hypernyms, sentiment, and more. 
+			- It can also incorporate custom lexicon features if provided. Debug mode provides additional output.
+
 
 		:param doc: _description_
 		:type doc: _type_
@@ -798,6 +846,12 @@ def TextToFeatures (textData, debug = False, lexicons = None, wnaReturnLevel = 5
 
 def TextToFeaturesReader (sentenceList, debug = False, inputLimit = False, lexicons = None, maxCores = False, wnaReturnLevel = 5, useSpellChecker = False, provideMisspellingDetailed = False, outputFileName = 'output', output_path = None):
 	"""_summary_
+	Processes a list of sentences to extract linguistic features and optionally saves the results.
+		- This function takes a list of sentences and processes each sentence to extract various linguistic features using the TextToFeatures function. 
+		- It supports optional parameters like debugging, input limits, custom lexicons, and spell checking. 
+		- The function can also save the processed text and corrections to a specified output path.
+		- If no output path is given, it saves in the current working directory.
+
 
 	:param sentenceList: _description_
 	:type sentenceList: _type_
@@ -859,6 +913,11 @@ def TextToFeaturesReader (sentenceList, debug = False, inputLimit = False, lexic
 
 def RunFeatureConstruction (fullinputpath = None, inputLimit = False, outputpath = None, outputFileName = 'output', maxCores = False, lexiconFileFullPath = None, wnaReturnLevel = 5, useSpellChecker = False, provideMisspellingDetailed = False):
 	"""_summary_
+    Executes the entire process of reading raw text, extracting features, and saving the results.
+		- This function orchestrates the workflow for feature construction from raw text data. 
+		- It reads raw text data from a specified file, processes the data to extract linguistic features, and optionally saves the results. 
+		- The function supports various parameters like input limits, custom lexicons, and detailed spell checking options.
+
 
 	:param fullinputpath: _description_, defaults to None
 	:type fullinputpath: _type_, optional
@@ -899,6 +958,12 @@ def RunFeatureConstruction (fullinputpath = None, inputLimit = False, outputpath
 
 def ConstructLegomena (corpus, debug = False):
 	"""_summary_
+    Constructs a dataframe of legomena (hapax and dis legomena) from a given corpus.
+		- This function applies the concept of legomena to a text corpus. 
+		- It identifies hapax legomena (words that occur only once) and dis legomena (words that occur exactly twice) in the corpus. 
+		- It then replaces occurrences of these words in the corpus with their respective labels 'HAPAX' or 'DIS'. 
+		- The function returns a dataframe where each row corresponds to the processed text of the corpus with legomena replaced.
+
 
 	:param corpus: _description_
 	:type corpus: _type_
@@ -963,6 +1028,12 @@ def ConstructLegomena (corpus, debug = False):
 
 def BuildFeatureVector (data, vectorizer, vectorizerName, feature, debug = False):
 	"""_summary_
+    Builds a feature vector from the given data using a specified vectorizer.
+		- This function transforms the provided data into a feature vector using the provided vectorizer. 
+		- It processes the data, fits the vectorizer, and generates a DataFrame with named columns based on the vectorizer's feature names. 
+		- The function is particularly useful for transforming text data into numerical features for machine learning models. 
+		- It also supports a debug mode for additional output, which is particularly helpful when handling the 'Misspelling' feature.
+
 
 	:param data: _description_
 	:type data: _type_
@@ -1016,6 +1087,13 @@ def BuildFeatureVector (data, vectorizer, vectorizerName, feature, debug = False
 
 def VectorProcessor (data, maxNgram = 3, vader = False, maxFeatures = None, buildVectors = 'b', removeZeroVariance = True, combineFeatures = False, minDF = 5, removeDupColumns = False, classLabels = False, runLegomena = True, additionalCols = False, writeRepresentations = False, justRepresentations = False, outputpath = None, debug = False, outputFileName = 'output'):
 	"""_summary_
+    Processes text data to generate feature vectors and optionally writes representations to disk.
+		- This function transforms text data into various types of feature vectors (like TF-IDF, count, binary) using n-grams.
+		- It can also add other features like VADER sentiment, class labels, and additional columns. 
+		- The function supports options to write the generated feature vectors to disk, remove zero-variance features, remove duplicate columns,
+		and more. 
+		- It returns a DataFrame with the final set of feature vectors.
+
 
 	:param data: _description_
 	:type data: _type_
@@ -1357,6 +1435,12 @@ def VectorProcessor (data, maxNgram = 3, vader = False, maxFeatures = None, buil
 
 def ResultWriter (df, outputpath = None, outputFileName = 'output', index = False, header = False, compression = None):
 	"""_summary_
+    Writes the given DataFrame to a CSV file at the specified output path.
+		- This function saves a provided DataFrame to a CSV file. 
+		- The file is named according to the specified outputFileName and saved at the given outputpath. 
+		- If no output path is provided, the current working directory is used. 
+		- The function supports options to include or exclude the index and header in the output file and to apply file compression.
+
 
 	:param df: _description_
 	:type df: _type_
@@ -1393,7 +1477,12 @@ def ResultWriter (df, outputpath = None, outputFileName = 'output', index = Fals
 
 def runVader (sentenceList, inputLimit):
 	"""_summary_
+    Analyzes the sentiment of sentences in a given list using the VADER sentiment analysis tool.
+		- This function applies the VADER sentiment analysis tool to each sentence in the provided list, up to the specified input limit. 
+		- It calculates negative, positive, neutral, and compound sentiment scores for each sentence. 
+		- The function returns a DataFrame with these sentiment scores for each sentence.
 
+	
 	:param sentenceList: _description_
 	:type sentenceList: _type_
 	:param inputLimit: _description_
@@ -1430,6 +1519,11 @@ def runVader (sentenceList, inputLimit):
 
 def GenerateColumnKey(df, outputpath = None, outputFileName = 'output'):
 	"""_summary_
+    Generates a key for the columns in a DataFrame and writes it to a file.
+		- This function creates a key for the columns of the provided DataFrame, detailing the structure and meaning of each column name. 
+		- It writes this key to a text file, helping users understand the composition of the feature set.
+		- The function supports output customization through the output path and file name parameters.
+
 
 	:param df: _description_
 	:type df: _type_
@@ -1501,6 +1595,11 @@ def GenerateColumnKey(df, outputpath = None, outputFileName = 'output'):
 
 def RunPostFeatureConstruction (lexiconpath, fullinputpath, inputLimit, outputpath = None, outputFileName = 'output', maxCores = False, maxNgram = 3, lexiconFileFullPath = False, vader = False, wnaReturnLevel = 5, maxFeatures = 50, buildVectors = 'b', index = False, removeZeroVariance = True, combineFeatures = False, minDF = 5, removeDupColumns = False, useSpellChecker = False, provideMisspellingDetailed = False, additionalCols = False, writeRepresentations = False, justRepresentations = False):
 	"""_summary_
+    Executes the post-feature construction process, including reading, processing, and writing data.
+		- This function handles various steps in the post-feature construction phase of text data processing. 
+		- It reads raw data, processes it for spellchecking, sentiment analysis (VADER), and constructs feature vectors. 
+		- The function supports a range of parameters for fine-tuning the feature construction process and allows saving of results in different formats.
+
 
 	:param lexiconpath: _description_
 	:type lexiconpath: _type_
@@ -1681,6 +1780,11 @@ lexTags = np.zeros((50000), dtype=object)
 
 def HashLetters(strToken):
 	"""_summary_
+    Generates hash values for the first two characters of a given string token.
+		- This function calculates hash values based on the positions of the first two characters of the input string token in the English alphabet. 
+		- It returns a pair of integers representing these positions. 
+		- If a character is not a letter, or if the string is shorter than two characters, a default value is assigned.
+
 
 	:param strToken: _description_
 	:type strToken: _type_
@@ -1707,6 +1811,11 @@ def HashLetters(strToken):
 
 def ReadFeatures(featuresFile):
 	"""_summary_
+    Reads and processes feature information from a specified file.
+		- This function reads feature data from a given file, parsing and organizing information about each feature. 
+		- It handles various aspects of the features such as category, type, and specific values. 
+		- The function populates global variables related to features, including the total number of features, categories, and lexicons found, as well as structures for storing specific feature data. 
+		- It also initializes and populates various arrays and data structures used in the ARFN.
 
 	:param featuresFile: _description_
 	:type featuresFile: _type_
@@ -1880,6 +1989,11 @@ def ReadFeatures(featuresFile):
 
 def ReadTrain(trainFile = None):
 	"""_summary_
+    Reads and processes training data from a specified file.
+		- This function reads training data, including class labels and feature values, from the provided file. 
+		- It updates global variables with information about the number of instances, classes, and features. 
+		- The function prepares the data for subsequent training processes in the ARFN.
+
 
 	:param trainFile: _description_, defaults to None
 	:type trainFile: _type_, optional
@@ -1965,6 +2079,11 @@ def ReadTrain(trainFile = None):
 
 def AssignTrainWeights(trainFile = None):
 	"""_summary_
+    Assigns weights to training features based on their distribution across classes.
+		- This function calculates weights for each feature in the training data, considering the distribution of feature values across different classes. 
+		- It aims to identify and weight features based on their significance in distinguishing between classes. 
+		- The function updates global variables related to feature weights.
+
 
 	:param trainFile: _description_, defaults to None
 	:type trainFile: _type_, optional
@@ -2030,6 +2149,11 @@ def AssignTrainWeights(trainFile = None):
 
 def ReadSentiScores():
 	"""_summary_
+    Loads and processes sentiment scores from a predefined file.
+		- This function reads sentiment scores for different words from a file named 'sentiscores.txt'. 
+		- It populates global arrays with these scores, which are used in the sentiment analysis part of the ARFN. 
+		- The function ensures that sentiment scores are accessible for further processing and analysis.
+
 	"""
 
 	global sentiscoresCt, sentiscores
@@ -2059,6 +2183,11 @@ def ReadSentiScores():
 
 def ReadLex():
 	"""_summary_
+    Reads and processes lexicon data from files within a specified directory.
+		- This function loads lexicon data from multiple files, each corresponding to a different lexicon. 
+		- It processes and stores this data in global structures for use in the ARFN system. 
+		- The function aggregates lexicon information, including words and their sentiment scores, facilitating their integration into the feature analysis process.
+
 	"""
 
 	global numLexFile, lexSentiScores, numLex, lexTags, hashlex, hashlexCt, hashlexClust, lexCt, lex
@@ -2103,6 +2232,11 @@ def ReadLex():
 
 def NGramSemantic(word):
 	"""_summary_
+    Calculates the semantic score of an n-gram word based on sentiment scores.
+		- This function computes a semantic score for a given word (or n-gram) by aggregating sentiment scores associated with its constituent tokens.
+		- It uses global sentiment score data to evaluate each token within the word. 
+		- The function is designed to contribute to the semantic analysis within the ARFN.
+
 
 	:param word: _description_
 	:type word: _type_
@@ -2142,6 +2276,11 @@ def NGramSemantic(word):
 
 def AssignSemanticWeights():
 	"""_summary_
+    Assigns semantic weights to features based on their semantic scores.
+		- This function updates the training weights of features by adding semantic scores. 
+		- It uses various semantic analysis functions to calculate the semantic score of each feature and adjusts the training weights accordingly. 
+		- The function primarily focuses on features related to words, legomena, hypernyms, affect, and sentiment.
+
 	"""
 
 	global featureIndex, featureStr, trainWeight
@@ -2168,6 +2307,10 @@ def AssignSemanticWeights():
 
 def POSSemantic(word):
 	"""_summary_
+    Calculates the semantic score of a word based on its POS (Part of Speech) tag.
+		- This function computes a semantic score for a given word considering its POS tag. 
+		- It utilizes global data structures containing sentiment scores to evaluate the word's semantic value based on its POS tag.
+
 
 	:param word: _description_
 	:type word: _type_
@@ -2233,6 +2376,9 @@ def POSSemantic(word):
 
 def POSWordSemantic(word):
 	"""_summary_
+    Calculates the semantic score of a word combined with its POS (Part of Speech) tag.
+		- This function assesses the semantic score of a word in conjunction with its POS tag. 
+		- It averages the sentiment scores associated with the word and its POS tag, considering the specific senses of the word based on its POS context.
 
 	:param word: _description_
 	:type word: _type_
@@ -2284,6 +2430,10 @@ def POSWordSemantic(word):
 
 def LEXSemantic(word):
 	"""_summary_
+    Calculates the semantic score of a word based on lexicon data.
+		- This function determines the semantic score of a word by referencing lexicon tags and sentiment scores. 
+		- It combines these with a general semantic score obtained from the NGramSemantic function for words not present in the lexicon.
+
 
 	:param word: _description_
 	:type word: _type_
@@ -2313,6 +2463,10 @@ def LEXSemantic(word):
 
 def MatchCharSubstrings(worda, c1, c2):
 	"""_summary_
+    Identifies matching character substrings within a given word.
+		- This function finds substrings in a word that match specific criteria based on their hash values. 
+		- It is used for processing character-based features within the ARFN system.
+
 
 	:param worda: _description_
 	:type worda: _type_
@@ -2343,6 +2497,10 @@ def MatchCharSubstrings(worda, c1, c2):
 
 def MatchSubstrings(worda, c1, c2):
 	"""_summary_
+    Identifies matching substrings within a given word based on specific categories.
+		- This function looks for substrings in a word that match certain criteria based on their hash values and categories.
+		- It is utilized in the ARFN for processing word and POS tag-based features.
+
 
 	:param worda: _description_
 	:type worda: _type_
@@ -2416,6 +2574,10 @@ def MatchSubstrings(worda, c1, c2):
 
 def SubsumeCatN(catVal,compVal,n1,n2):
 	"""_summary_
+    Handles the subsumption of features across different categories.
+		- This function subsumes features from one category to another based on their semantic similarity and other criteria.
+		- It is a part of the feature selection and reduction process in the ARFN.
+
 
 	:param catVal: _description_
 	:type catVal: _type_
@@ -2455,6 +2617,10 @@ def SubsumeCatN(catVal,compVal,n1,n2):
 
 def SubsumeFeatures(indexa, indexb, numM):
 	"""_summary_
+    Subsumes features based on their weights and categories.
+		- This function iterates over a set of features and determines whether they can be subsumed under another feature, based on their weights, categories, and other criteria. 
+		- Subsumption occurs when a feature is effectively encompassed or dominated by another feature, leading to its deactivation for simplification and efficiency.
+
 
 	:param indexa: _description_
 	:type indexa: _type_
@@ -2482,6 +2648,10 @@ def SubsumeFeatures(indexa, indexb, numM):
 
 def RunSubsumptions():
 	"""_summary_
+    Executes subsumption relations within feature categories.
+		- This function handles the subsumption process within feature categories in the ARFN. 
+		- It identifies and processes subsumption relationships, essentially determining which features can be considered subsets of others within the same category, and updates feature states accordingly.
+
 	"""
 
 	#global numCat, cat, catN
@@ -2502,6 +2672,10 @@ def RunSubsumptions():
 
 def LoadHash(c, n, fStatus):
 	"""_summary_
+    Loads feature data into a hash structure for efficient processing.
+		- This function populates a hash structure with features from a specified category and 'n' value, considering only those features that meet a defined status criterion. 
+		- It facilitates efficient access and processing of features during the subsumption and parallel processing stages.
+
 
 	:param c: _description_
 	:type c: _type_
@@ -2534,6 +2708,10 @@ def LoadHash(c, n, fStatus):
 
 def RunCCSubsumptions():
 	"""_summary_
+    Executes cross-category subsumption relations in the feature set.
+		- This function processes cross-category subsumptions in the ARFN. 
+		- It identifies and analyzes relationships between features across different categories, determining which features can be subsumed by others across categories.
+
 	"""
 
 	#global numCat, cat, catN
@@ -2567,6 +2745,10 @@ def RunCCSubsumptions():
 
 def RunParallels():
 	"""_summary_
+    Executes parallel relations between features in different categories.
+		- This function handles the identification and processing of parallel relationships among features across different categories. 
+		- It aims to find and analyze correlations between features from disparate categories within the ARFN.
+
 	"""
 
 	#global numCat, catN, cat
@@ -2615,6 +2797,10 @@ def RunParallels():
 
 def ParallelCatN(catVal, compVal, n1, n2):
 	"""_summary_
+    Processes parallel relations between specific categories of features.
+		- This function identifies and analyzes parallel relationships between two specified categories of features within the ARFN. 
+		- It uses predefined 'n' values to focus on specific subsets of features within these categories.
+
 
 	:param catVal: _description_
 	:type catVal: _type_
@@ -2662,6 +2848,10 @@ def ParallelCatN(catVal, compVal, n1, n2):
 
 def ParaLex(worda, f, c1, c2):
 	"""_summary_
+    Analyzes parallel relations between lexical features and other categories.
+		- This function evaluates parallel relationships between lexical features and other feature categories. 
+		- It generates potential query strings and analyzes matches to identify parallel relations within the ARFN.
+
 
 	:param worda: _description_
 	:type worda: _type_
@@ -2729,6 +2919,12 @@ def ParaLex(worda, f, c1, c2):
 
 def Correlation( indexa, comp, cat1, cat2):
 	"""_summary_
+    Evaluates and processes correlations between features in different categories.
+		- This function assesses the correlation between a primary feature and a set of comparison features. 
+		- It calculates the correlation coefficient to determine the strength of the relationship between each pair of features. 
+		- If the correlation exceeds a predefined threshold, actions such as feature deactivation may be taken. 
+		- This process aids in refining the feature set by identifying and handling redundant or highly correlated features.
+
 
 	:param indexa: _description_
 	:type indexa: _type_
@@ -2798,6 +2994,12 @@ def Correlation( indexa, comp, cat1, cat2):
 
 def ParaPOS(worda, f, c1, c2, n):
 	"""_summary_
+    Analyzes parallel relationships between word tokens and POS (Part Of Speech) tags for a given feature.
+		- This function assesses parallel relations between word tokens and POS tags. 
+		- It begins by identifying POS-word equivalents for a given word token. 
+		- Then, it extracts POS tag strings from these equivalents and compares them with other existing features in specific categories. 
+		- If matching features are identified, a correlation function is invoked to evaluate the relationship between the current feature and the matched features.
+
 
 	:param worda: _description_
 	:type worda: _type_
@@ -2849,6 +3051,11 @@ def ParaPOS(worda, f, c1, c2, n):
 
 def OutputRankings(weightFile):
 	"""_summary_
+    Outputs the rankings of features into a specified file.
+		- This function writes the rankings of features based on their calculated weights to a file. 
+		- Each line in the file contains the feature index, feature string, feature category, and the computed weight of the feature. 
+		- This output is useful for analyzing the relative importance or influence of different features after processing.
+
 
 	:param weightFile: _description_
 	:type weightFile: _type_
@@ -2861,6 +3068,24 @@ def OutputRankings(weightFile):
 
 def AFRN():
 	"""_summary_
+	Executes the Automated Feature Relation Network (AFRN) process.
+
+    This function orchestrates the entire process of the Automated Feature Relation Network. It involves reading and 
+    processing feature data, training data, sentiment scores, and lexicon information. The function assigns weights 
+    to training data and semantic aspects of the features, performs within-category and cross-category subsumptions 
+    of features, and runs parallel relations analysis. Finally, it outputs the ranked features based on their weights.
+
+    The process includes:
+    - Reading and initializing feature data.
+    - Loading and processing training data.
+    - Reading and assimilating sentiment scores.
+    - Loading lexicon data and integrating with features.
+    - Assigning weights to training data based on various criteria.
+    - Assigning semantic weights to features.
+    - Running subsumption processes to refine features.
+    - Executing parallel relations analysis between feature categories.
+    - Outputting the final rankings of features based on computed weights.
+
 	"""
 	
 	ReadFeatures()
