@@ -12,23 +12,17 @@ Welcome to textagon's documentation!
    readme
    
 
-OneParameterLogistic
+.. Main Docs
+.. =================================
+.. .. automodule:: textagon.textagon
+..    :members: 
+
+setSpellChecking
 =================================
-.. automodule:: py_irt.models.one_param_logistic
-   :members: 
-
-      
-TwoParameterLogistic
-================================
-.. automodule:: py_irt.models.two_param_logistic
-   :members: 
+.. autofunction:: textagon.setSpellChecking
 
 
-Theta Estimation
-===============================
-.. automodule:: py_irt.scoring
-   :members:
-      
+
 Indices and tables
 ==================
 

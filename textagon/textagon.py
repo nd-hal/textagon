@@ -1728,6 +1728,7 @@ from collections import defaultdict
 import datetime
 import re
 
+'''
 numFeat = 0
 foundNACt = 0
 foundNA = False
@@ -1776,7 +1777,7 @@ hashlex = np.zeros((27,27,50000), dtype=object)
 hashlexClust = np.zeros((27,27,50000),dtype=int)
 hashlexCt = np.zeros((27,27),dtype=int)
 lexTags = np.zeros((50000), dtype=object)
-
+'''
 
 def HashLetters(strToken):
 	"""_summary_
