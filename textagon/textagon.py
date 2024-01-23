@@ -86,7 +86,7 @@ nlp = spacy.load('en_core_web_sm', exclude = ['lemmatizer'])
 nlp.max_length = 10 ** 10
 
 def spaCyTOK (sentence):
-	"""_summary_
+	""" 
 
 	:param sentence: _description_
 	:type sentence: _type_
@@ -99,7 +99,7 @@ def spaCyTOK (sentence):
 	return(tokens)
 
 def splitWS (sentence):
-	"""_summary_
+	""" 
 
 	:param sentence: _description_
 	:type sentence: _type_
@@ -107,7 +107,7 @@ def splitWS (sentence):
 	return(sentence.split(' '))
 
 def vector_hasher(x):
-	"""_summary_
+	""" 
 
 	:param x: _description_
 	:type x: _type_
@@ -138,7 +138,7 @@ def say_hello():
 	print("Hello, World!")
 
 def setSpellChecking(exclusionsFileFullPath='None'):
-	"""_summary_
+	""" 
 	Configures and initializes a spell checker with a custom set of exclusion words.
 		- This function sets up a spell checker using the Enchant library and allows the user to specify a custom file
 		containing words to be excluded from spell checking. 
@@ -186,7 +186,7 @@ def setSpellChecking(exclusionsFileFullPath='None'):
 		return None, None, 0, None
 
 def ReadAllLexicons(lexiconFileFullPath=None):
-	"""_summary_
+	""" 
 	Reads and processes lexicons from a specified zip file or from a default file if none is provided.
 		- This function opens a zip file containing lexicon text files, reads each file, and builds a 
 		dictionary of custom lexicons. 
@@ -208,7 +208,7 @@ def ReadAllLexicons(lexiconFileFullPath=None):
 		lexiconFileFullPath = pkg_resources.resource_filename('textagon', 'external/lexicons/Lexicons_v5.zip')
 
 	def is_valid_zip_file(file_path):
-		"""_summary_
+		""" 
 		Validates if the provided file path points to an existing and valid zip file.
 		- This function checks if the specified file exists and whether it is a valid zip file. 
 		- It prints error messages accordingly if the file doesn't exist or isn't a zip file.
@@ -236,7 +236,7 @@ def ReadAllLexicons(lexiconFileFullPath=None):
 	customLexicons = {}
 
 	def BuildLexicon (L, customLexicons):
-		"""_summary_
+		""" 
 		Processes a string from a lexicon file and builds a dictionary of tags and tokens.
 			- Given the contents of a lexicon text file as a string, this function splits it into tag-token pairs.
     		- It then builds and updates a dictionary of custom lexicons with tags as keys and lists of tokens as values.
@@ -296,7 +296,7 @@ def ReadAllLexicons(lexiconFileFullPath=None):
 	return(customLexicons)
 
 def SanityCheck(dataPath: str = None, override_original_file: bool = False) -> Tuple[int, dict, List[Tuple[str, str]]]:
-	"""_summary_
+	""" 
     Performs a sanity check on the data file specified by the dataPath.
 		- This function validates the format of the data file, ensuring each line has two parts separated by a tab,
 		representing a label and corresponding text. 
@@ -361,7 +361,7 @@ def SanityCheck(dataPath: str = None, override_original_file: bool = False) -> T
 	return ret_dict
 
 def ReadRawText (path: str = None):
-	"""_summary_
+	""" 
 	Reads and processes raw text from a specified file path using the SanityCheck function.
 		- This function serves as a wrapper for the SanityCheck function, specifically to process and read raw text data.
 		- It takes the path to a data file, performs a sanity check on the data, and then extracts the class labels and
@@ -381,7 +381,7 @@ def ReadRawText (path: str = None):
 	return({'corpus': raw, 'classLabels': classLabels})
 
 def TextToFeatures (textData, debug = False, lexicons = None, wnaReturnLevel = 5, useSpellChecker = True, provideMisspellingDetailed = True, useCores = 1):
-	"""_summary_
+	""" 
     Transforms text data into various linguistic features for natural language processing.
 	    - This function processes a given dataset of text, performing tasks such as spell checking, basic text cleanup,
     	and extracting various linguistic features using spaCy and other NLP tools. 
@@ -425,7 +425,7 @@ def TextToFeatures (textData, debug = False, lexicons = None, wnaReturnLevel = 5
 		})
 
 	def BasicTextCleanup (sentence, debug = False):
-		"""_summary_
+		""" 
 		Performs basic cleanup on a given sentence, including HTML stripping, whitespace reduction, and spell checking.
 		    - This function removes HTML tags, reduces excessive whitespace, and optionally performs spell checking. 
 			- It is designed to be used as part of the text processing in the `TextToFeatures` function. Debug mode provides additional output.
@@ -651,7 +651,7 @@ def TextToFeatures (textData, debug = False, lexicons = None, wnaReturnLevel = 5
 	# Process Text with spaCy
 	print('\n# Processing Text Representations #\n')
 	def ProcessText (doc, debug = debug):
-		"""_summary_
+		""" 
 		Processes a text document using spaCy and other NLP tools to extract various linguistic features.
 		    - This function applies spaCy processing to extract features like POS tags, NER, word senses, hypernyms, sentiment, and more. 
 			- It can also incorporate custom lexicon features if provided. Debug mode provides additional output.
@@ -845,7 +845,7 @@ def TextToFeatures (textData, debug = False, lexicons = None, wnaReturnLevel = 5
 	return([textData, corrections])
 
 def TextToFeaturesReader (sentenceList, debug = False, inputLimit = False, lexicons = None, maxCores = False, wnaReturnLevel = 5, useSpellChecker = False, provideMisspellingDetailed = False, outputFileName = 'output', output_path = None):
-	"""_summary_
+	""" 
 	Processes a list of sentences to extract linguistic features and optionally saves the results.
 		- This function takes a list of sentences and processes each sentence to extract various linguistic features using the TextToFeatures function. 
 		- It supports optional parameters like debugging, input limits, custom lexicons, and spell checking. 
@@ -912,7 +912,7 @@ def TextToFeaturesReader (sentenceList, debug = False, inputLimit = False, lexic
 	return({'ProcessedText': processedText, 'Corrections': corrections})
 
 def RunFeatureConstruction (fullinputpath = None, inputLimit = False, outputpath = None, outputFileName = 'output', maxCores = False, lexiconFileFullPath = None, wnaReturnLevel = 5, useSpellChecker = False, provideMisspellingDetailed = False):
-	"""_summary_
+	""" 
     Executes the entire process of reading raw text, extracting features, and saving the results.
 		- This function orchestrates the workflow for feature construction from raw text data. 
 		- It reads raw text data from a specified file, processes the data to extract linguistic features, and optionally saves the results. 
@@ -957,7 +957,7 @@ def RunFeatureConstruction (fullinputpath = None, inputLimit = False, outputpath
 	print('### Stage execution finished at ' + end_time_str + ' (Time Elapsed: {})'.format(pd.to_timedelta(end_time - start_time).round('1s')) + ' ###\n')
 
 def ConstructLegomena (corpus, debug = False):
-	"""_summary_
+	""" 
     Constructs a dataframe of legomena (hapax and dis legomena) from a given corpus.
 		- This function applies the concept of legomena to a text corpus. 
 		- It identifies hapax legomena (words that occur only once) and dis legomena (words that occur exactly twice) in the corpus. 
@@ -1027,7 +1027,7 @@ def ConstructLegomena (corpus, debug = False):
 	return(legomenaDF)
 
 def BuildFeatureVector (data, vectorizer, vectorizerName, feature, debug = False):
-	"""_summary_
+	""" 
     Builds a feature vector from the given data using a specified vectorizer.
 		- This function transforms the provided data into a feature vector using the provided vectorizer. 
 		- It processes the data, fits the vectorizer, and generates a DataFrame with named columns based on the vectorizer's feature names. 
@@ -1086,7 +1086,7 @@ def BuildFeatureVector (data, vectorizer, vectorizerName, feature, debug = False
 	return(df)
 
 def VectorProcessor (data, maxNgram = 3, vader = False, maxFeatures = None, buildVectors = 'b', removeZeroVariance = True, combineFeatures = False, minDF = 5, removeDupColumns = False, classLabels = False, runLegomena = True, additionalCols = False, writeRepresentations = False, justRepresentations = False, outputpath = None, debug = False, outputFileName = 'output'):
-	"""_summary_
+	""" 
     Processes text data to generate feature vectors and optionally writes representations to disk.
 		- This function transforms text data into various types of feature vectors (like TF-IDF, count, binary) using n-grams.
 		- It can also add other features like VADER sentiment, class labels, and additional columns. 
@@ -1434,7 +1434,7 @@ def VectorProcessor (data, maxNgram = 3, vader = False, maxFeatures = None, buil
 		return(df)
 
 def ResultWriter (df, outputpath = None, outputFileName = 'output', index = False, header = False, compression = None):
-	"""_summary_
+	""" 
     Writes the given DataFrame to a CSV file at the specified output path.
 		- This function saves a provided DataFrame to a CSV file. 
 		- The file is named according to the specified outputFileName and saved at the given outputpath. 
@@ -1476,7 +1476,7 @@ def ResultWriter (df, outputpath = None, outputFileName = 'output', index = Fals
 	print('- Time Elapsed: {}\n'.format(pd.to_timedelta(datetime.now(get_localzone()) - start).round('1s')))
 
 def runVader (sentenceList, inputLimit):
-	"""_summary_
+	""" 
     Analyzes the sentiment of sentences in a given list using the VADER sentiment analysis tool.
 		- This function applies the VADER sentiment analysis tool to each sentence in the provided list, up to the specified input limit. 
 		- It calculates negative, positive, neutral, and compound sentiment scores for each sentence. 
@@ -1518,7 +1518,7 @@ def runVader (sentenceList, inputLimit):
 	return(vaderDF)
 
 def GenerateColumnKey(df, outputpath = None, outputFileName = 'output'):
-	"""_summary_
+	""" 
     Generates a key for the columns in a DataFrame and writes it to a file.
 		- This function creates a key for the columns of the provided DataFrame, detailing the structure and meaning of each column name. 
 		- It writes this key to a text file, helping users understand the composition of the feature set.
@@ -1594,7 +1594,7 @@ def GenerateColumnKey(df, outputpath = None, outputFileName = 'output'):
 	print('- Time Elapsed: {}\n'.format(pd.to_timedelta(datetime.now(get_localzone()) - start).round('1s')))
 
 def RunPostFeatureConstruction (lexiconpath, fullinputpath, inputLimit, outputpath = None, outputFileName = 'output', maxCores = False, maxNgram = 3, lexiconFileFullPath = False, vader = False, wnaReturnLevel = 5, maxFeatures = 50, buildVectors = 'b', index = False, removeZeroVariance = True, combineFeatures = False, minDF = 5, removeDupColumns = False, useSpellChecker = False, provideMisspellingDetailed = False, additionalCols = False, writeRepresentations = False, justRepresentations = False):
-	"""_summary_
+	""" 
     Executes the post-feature construction process, including reading, processing, and writing data.
 		- This function handles various steps in the post-feature construction phase of text data processing. 
 		- It reads raw data, processes it for spellchecking, sentiment analysis (VADER), and constructs feature vectors. 
@@ -1780,7 +1780,7 @@ lexTags = np.zeros((50000), dtype=object)
 '''
 
 def HashLetters(strToken):
-	"""_summary_
+	""" 
     Generates hash values for the first two characters of a given string token.
 		- This function calculates hash values based on the positions of the first two characters of the input string token in the English alphabet. 
 		- It returns a pair of integers representing these positions. 
@@ -1811,7 +1811,7 @@ def HashLetters(strToken):
 	return vals
 
 def ReadFeatures(featuresFile):
-	"""_summary_
+	""" 
     Reads and processes feature information from a specified file.
 		- This function reads feature data from a given file, parsing and organizing information about each feature. 
 		- It handles various aspects of the features such as category, type, and specific values. 
@@ -1989,7 +1989,7 @@ def ReadFeatures(featuresFile):
 	featuresData.close()
 
 def ReadTrain(trainFile = None):
-	"""_summary_
+	""" 
     Reads and processes training data from a specified file.
 		- This function reads training data, including class labels and feature values, from the provided file. 
 		- It updates global variables with information about the number of instances, classes, and features. 
@@ -2079,7 +2079,7 @@ def ReadTrain(trainFile = None):
 	trainData.close()
 
 def AssignTrainWeights(trainFile = None):
-	"""_summary_
+	""" 
     Assigns weights to training features based on their distribution across classes.
 		- This function calculates weights for each feature in the training data, considering the distribution of feature values across different classes. 
 		- It aims to identify and weight features based on their significance in distinguishing between classes. 
@@ -2149,7 +2149,7 @@ def AssignTrainWeights(trainFile = None):
 		trainWeightC[b][1] = int(maxCC)
 
 def ReadSentiScores():
-	"""_summary_
+	""" 
     Loads and processes sentiment scores from a predefined file.
 		- This function reads sentiment scores for different words from a file named 'sentiscores.txt'. 
 		- It populates global arrays with these scores, which are used in the sentiment analysis part of the ARFN. 
@@ -2183,7 +2183,7 @@ def ReadSentiScores():
 	#	print(str(sentiscores[2][14][z][0]),str(sentiscores[2][14][z][1]),str(sentiscores[2][14][z][2]))
 
 def ReadLex():
-	"""_summary_
+	""" 
     Reads and processes lexicon data from files within a specified directory.
 		- This function loads lexicon data from multiple files, each corresponding to a different lexicon. 
 		- It processes and stores this data in global structures for use in the ARFN system. 
@@ -2232,7 +2232,7 @@ def ReadLex():
 		if lexCt[x] >0: lexSentiScores[x]= float(lexSentiScores[x])/float(lexCt[x])
 
 def NGramSemantic(word):
-	"""_summary_
+	""" 
     Calculates the semantic score of an n-gram word based on sentiment scores.
 		- This function computes a semantic score for a given word (or n-gram) by aggregating sentiment scores associated with its constituent tokens.
 		- It uses global sentiment score data to evaluate each token within the word. 
@@ -2276,7 +2276,7 @@ def NGramSemantic(word):
 	return score
 
 def AssignSemanticWeights():
-	"""_summary_
+	""" 
     Assigns semantic weights to features based on their semantic scores.
 		- This function updates the training weights of features by adding semantic scores. 
 		- It uses various semantic analysis functions to calculate the semantic score of each feature and adjusts the training weights accordingly. 
@@ -2307,7 +2307,7 @@ def AssignSemanticWeights():
 			if trainWeight[x]>3: print(x,featureStr[x],trainWeight[x],valueSemantic)
 
 def POSSemantic(word):
-	"""_summary_
+	""" 
     Calculates the semantic score of a word based on its POS (Part of Speech) tag.
 		- This function computes a semantic score for a given word considering its POS tag. 
 		- It utilizes global data structures containing sentiment scores to evaluate the word's semantic value based on its POS tag.
@@ -2376,7 +2376,7 @@ def POSSemantic(word):
 	return score
 
 def POSWordSemantic(word):
-	"""_summary_
+	""" 
     Calculates the semantic score of a word combined with its POS (Part of Speech) tag.
 		- This function assesses the semantic score of a word in conjunction with its POS tag. 
 		- It averages the sentiment scores associated with the word and its POS tag, considering the specific senses of the word based on its POS context.
@@ -2430,7 +2430,7 @@ def POSWordSemantic(word):
 	return score
 
 def LEXSemantic(word):
-	"""_summary_
+	""" 
     Calculates the semantic score of a word based on lexicon data.
 		- This function determines the semantic score of a word by referencing lexicon tags and sentiment scores. 
 		- It combines these with a general semantic score obtained from the NGramSemantic function for words not present in the lexicon.
@@ -2463,7 +2463,7 @@ def LEXSemantic(word):
 	return score
 
 def MatchCharSubstrings(worda, c1, c2):
-	"""_summary_
+	""" 
     Identifies matching character substrings within a given word.
 		- This function finds substrings in a word that match specific criteria based on their hash values. 
 		- It is used for processing character-based features within the ARFN system.
@@ -2497,7 +2497,7 @@ def MatchCharSubstrings(worda, c1, c2):
 	return matchIndices, numMatch
 
 def MatchSubstrings(worda, c1, c2):
-	"""_summary_
+	""" 
     Identifies matching substrings within a given word based on specific categories.
 		- This function looks for substrings in a word that match certain criteria based on their hash values and categories.
 		- It is utilized in the ARFN for processing word and POS tag-based features.
@@ -2574,7 +2574,7 @@ def MatchSubstrings(worda, c1, c2):
 	return matchIndices, numMatch
 
 def SubsumeCatN(catVal,compVal,n1,n2):
-	"""_summary_
+	""" 
     Handles the subsumption of features across different categories.
 		- This function subsumes features from one category to another based on their semantic similarity and other criteria.
 		- It is a part of the feature selection and reduction process in the ARFN.
@@ -2617,7 +2617,7 @@ def SubsumeCatN(catVal,compVal,n1,n2):
 			SubsumeFeatures(f,matches, matchNum)
 
 def SubsumeFeatures(indexa, indexb, numM):
-	"""_summary_
+	""" 
     Subsumes features based on their weights and categories.
 		- This function iterates over a set of features and determines whether they can be subsumed under another feature, based on their weights, categories, and other criteria. 
 		- Subsumption occurs when a feature is effectively encompassed or dominated by another feature, leading to its deactivation for simplification and efficiency.
@@ -2648,7 +2648,7 @@ def SubsumeFeatures(indexa, indexb, numM):
 				outLogSub.write(str(indexa)+","+str(featureStr[indexa]) + "," + str(trainWeight[indexa]) + "  \t" + str(indexb[b])+","+str(featureStr[indexb[b]])  + "," + str(trainWeight[indexb[b]]) +"\n")
 
 def RunSubsumptions():
-	"""_summary_
+	""" 
     Executes subsumption relations within feature categories.
 		- This function handles the subsumption process within feature categories in the ARFN. 
 		- It identifies and processes subsumption relationships, essentially determining which features can be considered subsets of others within the same category, and updates feature states accordingly.
@@ -2672,7 +2672,7 @@ def RunSubsumptions():
 				SubsumeCatN(c,c,n,m); #e.g., 4-3, 3-2, 2-1 when m=n-1, but also covers 4-2, 4-1, etc.
 
 def LoadHash(c, n, fStatus):
-	"""_summary_
+	""" 
     Loads feature data into a hash structure for efficient processing.
 		- This function populates a hash structure with features from a specified category and 'n' value, considering only those features that meet a defined status criterion. 
 		- It facilitates efficient access and processing of features during the subsumption and parallel processing stages.
@@ -2708,7 +2708,7 @@ def LoadHash(c, n, fStatus):
 						ftCt[index[0]][index[1]] = ftCt[index[0]][index[1]] + 1
 
 def RunCCSubsumptions():
-	"""_summary_
+	""" 
     Executes cross-category subsumption relations in the feature set.
 		- This function processes cross-category subsumptions in the ARFN. 
 		- It identifies and analyzes relationships between features across different categories, determining which features can be subsumed by others across categories.
@@ -2745,7 +2745,7 @@ def RunCCSubsumptions():
 				SubsumeCatN(c,wordC,n,1); # e.g., charbi-word, chartri-word
 
 def RunParallels():
-	"""_summary_
+	""" 
     Executes parallel relations between features in different categories.
 		- This function handles the identification and processing of parallel relationships among features across different categories. 
 		- It aims to find and analyze correlations between features from disparate categories within the ARFN.
@@ -2797,7 +2797,7 @@ def RunParallels():
 				ParallelCatN(c,misC,n,n);  #WORD and MISSPELLING
 
 def ParallelCatN(catVal, compVal, n1, n2):
-	"""_summary_
+	""" 
     Processes parallel relations between specific categories of features.
 		- This function identifies and analyzes parallel relationships between two specified categories of features within the ARFN. 
 		- It uses predefined 'n' values to focus on specific subsets of features within these categories.
@@ -2848,7 +2848,7 @@ def ParallelCatN(catVal, compVal, n1, n2):
 					Correlation(f,matches,catVal,compVal)
 
 def ParaLex(worda, f, c1, c2):
-	"""_summary_
+	""" 
     Analyzes parallel relations between lexical features and other categories.
 		- This function evaluates parallel relationships between lexical features and other feature categories. 
 		- It generates potential query strings and analyzes matches to identify parallel relations within the ARFN.
@@ -2919,7 +2919,7 @@ def ParaLex(worda, f, c1, c2):
 				Correlation(f,matchIndices,c1,c2) #if not empty, send to correlation analyzer
 
 def Correlation( indexa, comp, cat1, cat2):
-	"""_summary_
+	""" 
     Evaluates and processes correlations between features in different categories.
 		- This function assesses the correlation between a primary feature and a set of comparison features. 
 		- It calculates the correlation coefficient to determine the strength of the relationship between each pair of features. 
@@ -2994,7 +2994,7 @@ def Correlation( indexa, comp, cat1, cat2):
 						outLogPar.write(str(cat[cat1])+","+str(featureStr[indexa]) + "," + str(trainWeight[indexa]) + "  \t" + str(cat[cat2])+","+str(featureStr[comp[z]]) + "," + str(trainWeight[comp[z]]) +"\t"+str(corrcoff)+"\n")
 
 def ParaPOS(worda, f, c1, c2, n):
-	"""_summary_
+	""" 
     Analyzes parallel relationships between word tokens and POS (Part Of Speech) tags for a given feature.
 		- This function assesses parallel relations between word tokens and POS tags. 
 		- It begins by identifying POS-word equivalents for a given word token. 
@@ -3051,7 +3051,7 @@ def ParaPOS(worda, f, c1, c2, n):
 		Correlation(f,matchIndices,c1,c2)
 
 def OutputRankings(weightFile):
-	"""_summary_
+	""" 
     Outputs the rankings of features into a specified file.
 		- This function writes the rankings of features based on their calculated weights to a file. 
 		- Each line in the file contains the feature index, feature string, feature category, and the computed weight of the feature. 
@@ -3068,7 +3068,7 @@ def OutputRankings(weightFile):
 		outFile.write(str(b+1)+"\t"+str(featureStr[b])+"\t"+str(featureCatStr[b]).strip("\n")+"\t"+str(trainWeight[b])+"\n")
 
 def AFRN():
-	"""_summary_
+	""" 
 	Executes the Automated Feature Relation Network (AFRN) process.
 
     This function orchestrates the entire process of the Automated Feature Relation Network. It involves reading and 
