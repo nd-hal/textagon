@@ -9,6 +9,10 @@ Textagon is a powerful tool for text data analysis, providing a means to visuali
 - **Parallel Representations**
 - **Graph-based Feature Weighting**
 
+# Run DEMO
+
+https://drive.google.com/file/d/1lGn7o9KUh3CACC5RIjePQiU1-DS87Jk5/view?usp=sharing
+
 # Test in local
 ```
 conda activate your_env
