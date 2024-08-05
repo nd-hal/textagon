@@ -11,7 +11,7 @@ Textagon is a powerful tool for text data analysis, providing a means to visuali
 
 # Run DEMO
 
-https://colab.research.google.com/drive/1lGn7o9KUh3CACC5RIjePQiU1-DS87Jk5
+https://colab.research.google.com/drive/115P0Psl49CQIp9InJXJxQKMoN9NmfDvt
 
 # Test in local
 ```
