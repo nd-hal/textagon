@@ -30,6 +30,8 @@ setup(
         'pyenchant >= 3.2.2',
         'tzlocal >= 4.3',
         'spacy >= 3.5.2',
+        'wn==0.0.23',
+        'pywsd >= 1.2.5'
     ],
     entry_points={
         'console_scripts': [

@@ -10,3 +10,4 @@ def main():
     nltk.download('sentiwordnet')
     nltk.download('vader_lexicon')
     nltk.download('punkt')
+
