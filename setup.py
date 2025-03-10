@@ -9,7 +9,7 @@ with open(readme_path, "r", encoding="utf-8") as fh:
 
 setup(
     name = 'textagon',
-    version = '0.1.18',
+    version = '0.1.19',
     packages = find_packages(),
     description = 'Textagon is a powerful tool for text data analysis, providing a means to visualize parallel representations of your data and gain insight into the impact of various lexicons on two classes of text data.',
     long_description=long_description,
@@ -30,6 +30,8 @@ setup(
         'pyenchant >= 3.2.2',
         'tzlocal >= 4.3',
         'spacy >= 3.5.2',
+        'wn==0.0.23',
+        'pywsd >= 1.2.5'
     ],
     entry_points={
         'console_scripts': [
