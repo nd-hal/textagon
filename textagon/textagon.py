@@ -100,7 +100,7 @@ swn.ensure_loaded()
 class Textagon:
     def __init__(
             self,
-            inputFileFullPath,
+            inputFile,
             outputFileName, 
             inputLimit, 
             maxFeatures,
@@ -123,7 +123,7 @@ class Textagon:
             runType,
             justRepresentations
             ):
-        self.inputFileFullPath = inputFileFullPath
+        self.inputFile = inputFile
         self.outputFileName = outputFileName
         self.inputLimit = inputLimit
         self.maxFeatures = maxFeatures
@@ -686,7 +686,7 @@ class Textagon:
 
         print('# Now Reading Raw Data #')
 
-        res = ReadRawText(self.inputFileFullPath)
+        res = self.inputFile
         rawTextData = res['corpus']
         classLabels = res['classLabels']
 
@@ -705,7 +705,7 @@ class Textagon:
 
         print('# Now Reading Raw Data #')
 
-        res = ReadRawText(self.inputFileFullPath)
+        res = self.inputFile
         rawTextData = res['corpus']
         classLabels = res['classLabels']
 
@@ -770,7 +770,7 @@ class Textagon:
 
         print('# Now Reading Raw Data #')
 
-        res = ReadRawText(self.inputFileFullPath)
+        res = self.inputFile
         raw = res['corpus']
         classLabels = res['classLabels']
 
@@ -818,8 +818,11 @@ class Textagon:
 
 ### Test cases ###
 
+df = pd.read_csv('../examples/dvd.txt', sep='\t', header=None, names=["classLabels", "corpus"])
+
+
 tgon = Textagon(
-    "upload/dvd.txt", "dvd", 0, 0, 4, 3, "upload/Lexicons_v5.zip", 
+    df, "dvd", 0, 0, 4, 3, "upload/Lexicons_v5.zip", 
     1, 5, "bB", 0, 1, 0, 3, 1, 1, 1, 1, 1, "upload/exclusions.txt", "full",
     False
 )
