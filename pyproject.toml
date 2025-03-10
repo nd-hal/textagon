@@ -1,17 +1,17 @@
 [tool.poetry]
 name = "textagon"
-version = "0.1.18"
+version = "0.1.19"
 description = "Textagon is a powerful tool for text data analysis, providing a means to visualize parallel representations of your data and gain insight into the impact of various lexicons on two classes of text data."
 authors = ['Ahmed Abbasi <aabbasi@nd.edu>', 'David Dobolyi <david.dobolyi@colorado.edu>', 'John P. Lalor <john.lalor@nd.edu>', 'Ruiyang Qin <rqin@nd.edu>']
 license = "MIT LIcense"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 nltk = ">=3.8.1"
 scikit-learn = ">=1.2.1"
 pandas = ">=1.5.3"
-numpy = ">=1.24.2"
+numpy = ">=1.24.2, <2.0.0"
 beautifulsoup4 = ">=4.11.2"
 mapply = ">=0.1.21"
 pyenchant = ">=3.2.2"

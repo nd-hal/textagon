@@ -56,8 +56,9 @@ warnings.filterwarnings('ignore', message = '.*looks like a URL.*', category = U
 warnings.filterwarnings('ignore', message = '.*The multilingual functions are not available with this Wordnet version*', category = UserWarning, module = 'nltk')
 
 
-from utils import *
+from textagon.utils import *
 
+from importlib.resources import files
 
 #####################
 ### CONFIGURATION ###
@@ -213,9 +214,12 @@ class Textagon:
 
         
         ### Set Paths ###
+        #data_text = files('mypkg.data').joinpath('data1.txt').read_text()
+
         basepath = os.getcwd()
         self.lexiconpath = basepath + '/external/lexicons'
         self.outputpath = basepath + '/output'
+        os.makedirs(self.outputpath, exist_ok=True)
 
         ### Setup NLP Tools ###
         nltk.download('stopwords')
@@ -231,10 +235,10 @@ class Textagon:
         
 
         # WordNet Affect (not on pip; see github) #
-        sys.path.append(basepath + '/external/extracted/WNAffect-master')
-        from wnaffect import WNAffect
-        from emotion import Emotion
-        self.wna = WNAffect(basepath + '/external/extracted/wordnet-1.6', basepath + '/external/extracted/wn-domains')
+        #sys.path.append(basepath + '/external/extracted/WNAffect-master')
+        from textagon.wnaffect import WNAffect
+        from textagon.emotion import Emotion
+        self.wna = WNAffect('wordnet-1.6', 'wn-domains')
 
         # VADER #
         from nltk.sentiment.vader import SentimentIntensityAnalyzer
@@ -824,20 +828,6 @@ class Textagon:
 
         df = VectorProcessor(representations, maxNgram = self.maxNgram, vader = vader, maxFeatures = self.maxFeatures, buildVectors = self.buildVectors, removeZeroVariance = self.removeZeroVariance, combineFeatures = self.combineFeatures, minDF = self.minDF, removeDupColumns = self.removeDupColumns, classLabels = classLabels, additionalCols = additionalCols, writeRepresentations = self.writeRepresentations, justRepresentations = self.justRepresentations)
 
-
-### Test cases ###
-
-df = pd.read_csv('../examples/dvd.txt', sep='\t', header=None, names=["classLabels", "corpus"])
-
-
-tgon = Textagon(
-    df, "dvd", 0, 0, 4, 3, "upload/Lexicons_v5.zip", 
-    1, 5, "bB", 0, 1, 0, 3, 1, 1, 1, 1, 1, "upload/exclusions.txt", "full",
-    False
-)
-
-tgon.RunFeatureConstruction()
-tgon.RunPostFeatureConstruction()
 
 
 """

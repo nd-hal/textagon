@@ -25,6 +25,9 @@ from enchant.tokenize import EmailFilter, URLFilter
 
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
+from importlib.resources import files
+
+
 def spaCyTOK (sentence, nlp):
 
     doc = nlp.tokenizer(sentence)
@@ -66,7 +69,6 @@ def BuildLexicon (L, customLexicons, file):
                 customLexicons[os.path.splitext(os.path.basename(file))[0].upper() ][tag] = tokens
 
         return(customLexicons)
-
 def ReadAllLexicons (lexiconpath, lexiconFileFullPath = False):
     """Read Custom Lexicons Function"""
 
@@ -76,16 +78,17 @@ def ReadAllLexicons (lexiconpath, lexiconFileFullPath = False):
     if lexiconFileFullPath:
         
         if lexiconFileFullPath != 'None':
+            lexFile = files('textagon.data').joinpath(lexiconFileFullPath)
 
-            zipFile = zf.ZipFile(lexiconFileFullPath, 'r')
+            zipFile = zf.ZipFile(lexFile, 'r')
             for file in sorted(zipFile.namelist()):
                 if fnmatch.fnmatch(file, '*.txt'):
                     L = zipFile.read(file).decode('utf-8').encode('utf-8').decode('unicode-escape')
                     customLexicons = BuildLexicon(L, customLexicons, file)
     else:
 
-        for (dir, dirs, files) in os.walk(lexiconpath):
-            for file in files:
+        for (dir, dirs, pathFiles) in os.walk(lexiconpath):
+            for file in pathFiles:
                 if fnmatch.fnmatch(file, '*.txt'):
                     L = open(os.path.join(dir, file), "r").read().encode('utf-8').decode('unicode-escape')
                     #L = codecs.open(os.path.join(dir, file), "r", "utf-8").read()
