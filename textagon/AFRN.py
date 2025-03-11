@@ -1046,12 +1046,12 @@ ct = datetime.datetime.now()
 print("current time:-", ct) 
 
 
-
+"""
 
 featuresFile = f'../examples/output/dvd_key.txt'
 trainFile = f'../examples/output/dvd.csv'
 weightFile = f'../examples/output/dvd_weights.txt'
-"""#Extra reload"""
+
 #lexFile = ['./Lexicons/lexicon_v5/' + file for file in os.listdir('./Lexicons/lexicon_v5/')]
 #numLexFile = len(lexFile)
 
@@ -1074,3 +1074,5 @@ afrn.outLogSub.close()
 afrn.RunParallels()
 afrn.outLogPar.close()
 afrn.OutputRankings()
+
+"""
