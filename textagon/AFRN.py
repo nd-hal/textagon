@@ -8,6 +8,7 @@ from collections import defaultdict
 import datetime
 import re
 
+from importlib.resources import files
 
 
 
@@ -381,7 +382,9 @@ class AFRN:
 
 		self.sentiscores = np.zeros((27,27,int(sentiMax),3), dtype=object)
 		self.sentiscoresCt = np.zeros((27,27), dtype="int32")
-		self.sentiScoresData = open("./data/sentiscores.txt").readlines()
+		sentifile = files('textagon.data').joinpath("sentiscores.txt")
+		self.sentiScoresData = open(sentifile).readlines()
+		
 		
 		print("Loading sentiment scores",sentiMax)
 		for row in self.sentiScoresData:
@@ -1036,7 +1039,7 @@ class AFRN:
 
 	def OutputRankings(self):
 
-		outFile = open(weightFile, "w")
+		outFile = open(self.weightFile, "w")
 		for b in range(0, self.numFeat):
 			outFile.write(str(b+1)+"\t"+str(self.featureStr[b])+"\t"+str(self.featureCatStr[b]).strip("\n")+"\t"+str(self.trainWeight[b])+"\n")
 
