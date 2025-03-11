@@ -86,6 +86,17 @@ class SuppressStdErr:
         sys.stderr.close()
         sys.stderr = self._original_stderr
 
+### Setup NLP Tools ###
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('averaged_perceptron_tagger_eng')
+nltk.download('wordnet')
+nltk.download('sentiwordnet')
+nltk.download('vader_lexicon')
+nltk.download('punkt')
+nltk.download('punkt_tab')
+
+os.system("python -m spacy download en_core_web_sm")
 
 with SuppressStdErr():
     import pywsd
@@ -221,17 +232,6 @@ class Textagon:
         self.outputpath = basepath + '/output'
         os.makedirs(self.outputpath, exist_ok=True)
 
-        ### Setup NLP Tools ###
-        nltk.download('stopwords')
-        nltk.download('averaged_perceptron_tagger')
-        nltk.download('averaged_perceptron_tagger_eng')
-        nltk.download('wordnet')
-        nltk.download('sentiwordnet')
-        nltk.download('vader_lexicon')
-        nltk.download('punkt')
-        nltk.download('punkt_tab')
-
-        os.system("python -m spacy download en_core_web_sm")
         
 
         # WordNet Affect (not on pip; see github) #
