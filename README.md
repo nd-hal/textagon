@@ -1,4 +1,4 @@
-![Python 3.6+](https://img.shields.io/badge/python-3.6%2B-blue.svg) ![License: PSF](https://img.shields.io/badge/License-PSF-blue.svg)
+![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg) ![License: PSF](https://img.shields.io/badge/License-MIT-blue.svg)
 
 
 
