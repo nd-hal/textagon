@@ -236,8 +236,9 @@ class Textagon:
 
         # WordNet Affect (not on pip; see github) #
         #sys.path.append(basepath + '/external/extracted/WNAffect-master')
-        from textagon.wnaffect import WNAffect
-        from textagon.emotion import Emotion
+        #from textagon.wnaffect import WNAffect
+        from textagon.customwna import WNAffect
+        #from textagon.emotion import Emotion
         self.wna = WNAffect('wordnet-1.6', 'wn-domains')
 
         # VADER #
@@ -322,7 +323,8 @@ class Textagon:
         for i, each in enumerate(Word):
 
             try:
-                wnaRes = str(self.wna.get_emotion(Word[i], POSTreeBank[i][1]).get_level(self.wnaReturnLevel))
+                #wnaRes = str(self.wna.GetWNAffect(Word[i], POSTreeBank[i][1]).get_level(self.wnaReturnLevel))
+                wnaRes = str(self.wna.GetWNAffect(Word[i]).get_level(self.wnaReturnLevel))
                 Affect.append(wnaRes.upper())
             except:
                 Affect.append(Word[i])

@@ -95,6 +95,19 @@ class AFRN:
 		self.hashlexCt = np.zeros((27,27),dtype=int)
 		self.lexTags = np.zeros((self.semMax), dtype=object)
 
+	def RankRepresentations(self):
+		self.ReadFeatures()
+		self.ReadTrain()
+		self.ReadSentiScores()
+		self.ReadLex()
+		self.AssignTrainWeights()
+		self.AssignSemanticWeights()
+		self.RunSubsumptions()
+		self.RunCCSubsumptions()
+		self.outLogSub.close()
+		self.RunParallels()
+		self.outLogPar.close()
+		self.OutputRankings()
 
 	def ReadFeatures(self):
 		print("Loading features")
