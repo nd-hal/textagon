@@ -740,7 +740,7 @@ class Textagon:
 
         sentenceWriter = open(os.path.join(self.outputpath, self.outputFileName + '_cleaned_sentences.txt'), 'w', encoding = 'utf-8')
         for i, cleanedSentence in enumerate(processedText['Spellchecker_CorrectedSentence']):
-            sentenceWriter.write(classLabels[i] + '\t' + cleanedSentence + '\n')
+            sentenceWriter.write(str(classLabels[i]) + '\t' + cleanedSentence + '\n')
         sentenceWriter.close()
         processedText = processedText.drop(columns = 'Spellchecker_CorrectedSentence')
 
@@ -809,7 +809,7 @@ class Textagon:
         print('# Now Writing Cleaned Sentences to Disk #', '\n')
         sentenceWriter = open(os.path.join(self.outputpath, self.outputFileName + '_cleaned_sentences.txt'), 'w', encoding = 'utf-8')
         for i, cleanedSentence in enumerate(cleanedSentences):
-            sentenceWriter.write(classLabels[i] + '\t' + cleanedSentence + '\n')
+            sentenceWriter.write(str(classLabels[i]) + '\t' + cleanedSentence + '\n')
         sentenceWriter.close()
 
         print('# Now Writing Spelling Corrections to Disk #', '\n')
