@@ -1,0 +1,10 @@
+1. util method for downloading data
+   - are licenses required?
+   - also consider nltk downloads and spacy downloads that are necessary pre-reqs for textagon functionality
+
+2. three .py files with what seem to be duplicates. Why is that?
+
+- process-text.py 
+- AFRN.py 
+- textagon.py 
+

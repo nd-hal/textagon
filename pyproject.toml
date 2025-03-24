@@ -1,4 +1,38 @@
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+[tool.poetry]
+name = "textagon"
+version = "0.1.24"
+description = "Textagon is a powerful tool for text data analysis, providing a means to visualize parallel representations of your data and gain insight into the impact of various lexicons on two classes of text data."
+authors = [
+    "John P. Lalor <john.lalor@nd.edu>", 
+    "Ahmed Abbasi <aabbasi@nd.edu>", 
+    "David Dobolyi <david.dobolyi@colorado.edu>", 
+    "Ruiyang Qin <rqin@nd.edu>"
+]
+license = "MIT LIcense"
+readme = "README.md"
 
+[tool.poetry.dependencies]
+python = "^3.10"
+nltk = ">=3.8.1"
+scikit-learn = ">=1.2.1"
+pandas = ">=1.5.3"
+numpy = ">=1.24.2, <2.0.0"
+beautifulsoup4 = ">=4.11.2"
+mapply = ">=0.1.21"
+pyenchant = ">=3.2.2"
+tzlocal = ">=4.3"
+spacy = ">=3.5.2"
+wn = "0.0.23"
+pywsd = "^1.2.5"
+
+
+[tool.poetry.group.dev.dependencies]
+sphinx = "^7.2.6"
+sphinx-rtd-theme = "^2.0.0"
+m2r2 = "^0.3.3.post2"
+ipykernel = "^6.29.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
