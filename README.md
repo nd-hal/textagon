@@ -41,6 +41,8 @@ pip install --upgrade textagon
 
 # Running Textagon 
 
+1. Generate representations
+
 ```python
 import pandas as pd
 from textagon.textagon import Textagon
@@ -62,4 +64,49 @@ tgon = Textagon(
 
 tgon.RunFeatureConstruction()
 tgon.RunPostFeatureConstruction()
+
+```
+
+2. Unzip stored representations
+
+```python
+import zipfile
+import os
+
+# Specify the path to the zip file
+zip_file_path = './output/distress_representations.zip'
+
+# Specify the directory to extract files to
+extract_to_directory = './output/distress_representations'
+
+# Ensure the directory exists
+os.makedirs(extract_to_directory, exist_ok=True)
+
+# Open the zip file
+with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+    # Extract all the contents
+    zip_ref.extractall(extract_to_directory)
+
+print(f"Files extracted to {extract_to_directory}")
+```
+
+3. Score and rank representations with tGBS.
+
+_Note_: In the package, this module is called AFRN for continuinty with earlier versions of Textagon. 
+We plan to update the naming in a future release. 
+
+```python
+featuresFile = './output/distress_key.txt'
+trainFile = './output/distress.csv'
+weightFile = './output/distress_weights.txt'
+
+
+afrn=AFRN(
+	featuresFile=featuresFile,
+	trainFile=trainFile,
+	weightFile=weightFile
+)
+
+afrn.RankRepresentations()
+
 ```
