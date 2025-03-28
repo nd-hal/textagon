@@ -46,7 +46,7 @@ pip install --upgrade textagon
 ```python
 import pandas as pd
 from textagon.textagon import Textagon
-from textagon.AFRN import AFRN
+from textagon.tGBS import tGBS
 
 ### Test cases ###
 
@@ -92,8 +92,6 @@ print(f"Files extracted to {extract_to_directory}")
 
 3. Score and rank representations with tGBS.
 
-_Note_: In the package, this module is called AFRN for continuinty with earlier versions of Textagon. 
-We plan to update the naming in a future release. 
 
 ```python
 featuresFile = './output/distress_key.txt'
@@ -101,12 +99,12 @@ trainFile = './output/distress.csv'
 weightFile = './output/distress_weights.txt'
 
 
-afrn=AFRN(
+ranker=tGBS(
 	featuresFile=featuresFile,
 	trainFile=trainFile,
 	weightFile=weightFile
 )
 
-afrn.RankRepresentations()
+ranker.RankRepresentations()
 
 ```
