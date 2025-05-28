@@ -108,3 +108,18 @@ ranker=tGBS(
 ranker.RankRepresentations()
 
 ```
+
+
+# Citation
+
+If you use Textagon in your work, please cite the paper (forthcoming in ACL 2025):
+
+```
+@inproceedings{lalorTextagon,
+  title = {Textagon: Boosting Language Models with Theory-guided Parallel Representations},
+  author = {Lalor, John P and Qin, Ruiyang and Dobolyi, David and Abbasi, Ahmed},
+  booktitle = {Proceedings of the 2025 Annual Meeting of the Association for Computational Linguistics},
+  date = {2025}
+}
+```
+
