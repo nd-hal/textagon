@@ -24,6 +24,7 @@ tzlocal = ">=4.3"
 spacy = ">=3.5.2"
 wn = "0.0.23"
 pywsd = "^1.2.5"
+streamlit = "^1.47.0"
 
 
 [tool.poetry.group.dev.dependencies]
